@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Savana" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="backgroundColor">#FFF6ED</item>
+        <item name="colorAccent">#94290D</item>
+
+        <item name="colorButtonNormal">#1D1D1D</item>
+        <item name="colorOnBackground">#1D1D1D</item>
+        <item name="colorError">#E65656</item>
+        <item name="colorOnPrimary">#FFF6ED</item>
+
+        <item name="colorOutline">#1D1D1D</item>
+        <item name="colorSecondary">#C7C1BC</item>
+        <item name="colorOnSecondary">#1D1D1D</item>
+    </style>
+
+</resources>
