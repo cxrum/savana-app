@@ -14,5 +14,9 @@
     <color name="colorOutline">#1D1D1D</color>
     <color name="colorSecondary">#C7C1BC</color>
     <color name="colorOnSecondary">#1D1D1D</color>
+    <color name="light_blue_400">#FF29B6F6</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_600">#FF757575</color>
 
 </resources>

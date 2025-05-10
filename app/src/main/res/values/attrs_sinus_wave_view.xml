@@ -1,0 +1,9 @@
+<resources>
+    <declare-styleable name="SineWaveLoadingView">
+        <attr name="waveColor" format="color" />
+        <attr name="waveStrokeWidth" format="dimension" />
+        <attr name="minAmplitude" format="float" />
+        <attr name="maxAmplitude" format="float" />
+        <attr name="waveFrequency" format="float" />
+    </declare-styleable>
+</resources>

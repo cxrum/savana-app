@@ -1,4 +1,4 @@
-package com.savana.ui.activities
+package com.savana.ui.activities.authentication
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,13 +7,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.savana.R
 
-class RegistrationActivity : AppCompatActivity() {
+class AuthenticationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
-        setContentView(R.layout.activity_registration)
-
+        setContentView(R.layout.activity_authentication)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

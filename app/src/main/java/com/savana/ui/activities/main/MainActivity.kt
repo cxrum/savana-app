@@ -1,4 +1,4 @@
-package com.savana.ui.activities
+package com.savana.ui.activities.main
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
