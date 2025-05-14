@@ -1,0 +1,49 @@
+<resources>
+    <style name="Base.Theme.Savana.TextInputLayout.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+        <item name="boxCornerRadiusTopStart">16dp</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="android:textColorHint">@color/gray_600</item>
+    </style>
+
+    <style name="Base.Theme.Savana.Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="fontFamily">@font/instrument_sans</item>
+    </style>
+
+    <style name="Base.Theme.Savana.Text.Title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="fontFamily">@font/instrument_sans_semibold</item>
+    </style>
+
+    <style name="Base.Theme.Savana.Text.Subtitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="fontFamily">@font/instrument_sans_semibold</item>
+    </style>
+
+    <style name="Base.Theme.Savana.Text.Label1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="fontFamily">@font/instrument_sans_medium</item>
+    </style>
+
+    <style name="Base.Theme.Savana.Text.Body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="fontFamily">@font/instrument_sans</item>
+    </style>
+
+    <style name="Base.Theme.Savana.Text.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="fontFamily">@font/instrument_sans</item>
+    </style>
+
+</resources>
