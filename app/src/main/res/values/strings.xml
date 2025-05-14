@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Savana</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">Email</string>
+    <string name="welcome">Welcome!</string>
+    <string name="password">Password</string>
+    <string name="greeting">Welcome back!</string>
+    <string name="sing_in">Sing in</string>
+    <string name="no_account">I have no account</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="next_step">Next step</string>
+    <string name="enter_name">Enter name</string>
+    <string name="select_avatar">Select avatar</string>
+    <string name="confirm">Confirm</string>
+    <string name="already_have_account">I already have an account</string>
+    <string name="welcome_back">Welcome back!</string>
+    <string name="select_file">Select File</string>
+    <string name="select_music_to_analyze">Select Music to analyze</string>
+    <string name="supported_formats">Supported Format: mp3</string>
+    <string name="user_note">We can only analyze your files.</string>
+    <string name="select_another_file">Select another file</string>
+    <string name="cancel">Cancel</string>
+    <string name="song_length_restriction">We can analyze only 30s of song</string>
+    <string name="diagram_of_your_song">Diagram of your song</string>
+    <string name="your_recommendations">Your recommendations:</string>
+    <string name="search">Search</string>
+    <string name="history_title">History:</string>
+    <string name="your_history_empty">Your history is empty</string>
+    <string name="welcome_press">Press, press, press, press!</string>
+    <string name="name">Nickname</string>
+    <string name="enter_nickname">Enter nickname</string>
+    <string name="enter_password">Enter password</string>
+    <string name="go_back">Go back</string>
 </resources>
