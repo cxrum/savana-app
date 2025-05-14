@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="blocked_item_spacing">32dp</dimen>
+    <dimen name="inner_text_block_spacing">8dp</dimen>
+    <dimen name="text_block_spacing">16dp</dimen>
+    <dimen name="block_spacing">64dp</dimen>
+    <dimen name="button_height">52dp</dimen>
+</resources>
