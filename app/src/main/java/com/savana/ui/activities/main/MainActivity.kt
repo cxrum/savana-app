@@ -2,13 +2,9 @@ package com.savana.ui.activities.main
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.savana.R
 import com.savana.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

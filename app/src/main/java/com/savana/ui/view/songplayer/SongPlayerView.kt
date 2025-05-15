@@ -10,10 +10,9 @@ class SongPlayerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : ConstraintLayout(context, attrs) {
 
-    private val _binding  = null
 
     init {
-
+        loadAttributes(attrs)
     }
 
     private fun loadAttributes(attrs: AttributeSet?) {

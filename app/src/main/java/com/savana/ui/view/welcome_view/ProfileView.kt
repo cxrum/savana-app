@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.core.content.withStyledAttributes
+import com.savana.R
 import com.savana.databinding.ViewProfileBinding
 
 class ProfileView @JvmOverloads constructor(
@@ -20,8 +22,11 @@ class ProfileView @JvmOverloads constructor(
         loadAttributes(attrs)
     }
 
-    private fun loadAttributes(attrs: AttributeSet?){
+    private fun loadAttributes(attrs: AttributeSet?) {
+        attrs?.let {
+            context.withStyledAttributes(it, R.styleable.SongGapSelectorView, 0, 0) {
 
+            }
+        }
     }
-
 }
