@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="TitleView">
+        <attr name="subtitle" format="reference|string"/>
+        <attr name="title" format="reference|string"/>
+    </declare-styleable>
+</resources>

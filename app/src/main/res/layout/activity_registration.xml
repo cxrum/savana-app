@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.registration.RegistrationActivity">
+    tools:context=".ui.activities.registration.RegistrationActivity"
+    android:orientation="vertical"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    >
+    <com.savana.ui.view.step_bar.StepBarView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:padding="8dp"
+        >
+    </com.savana.ui.view.step_bar.StepBarView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/inner_text_block_spacing">
+    </Space>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:icon="@drawable/ic_back_arrow"
+        app:iconTint="@color/colorOnBackground"
+        android:text="@string/go_back"
+        android:textColor="@color/colorOnBackground"
+        android:padding="8dp"
+        >
+    </com.google.android.material.button.MaterialButton>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing">
+    </Space>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/registration_nav_graph"
+        android:padding="32dp"
+        >
+    </androidx.fragment.app.FragmentContainerView>
+
+</LinearLayout>

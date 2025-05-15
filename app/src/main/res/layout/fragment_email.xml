@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.registration.EmailFragment"
+    android:orientation="vertical">
+
+
+    <com.savana.ui.view.welcome_view.TitleView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:title="@string/app_name"
+        app:subtitle="@string/create_an_account"
+        >
+    </com.savana.ui.view.welcome_view.TitleView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing">
+    </Space>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.TextInputLayout.OutlinedBox"
+        android:hint="@string/email"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/block_spacing">
+    </Space>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/next_step"
+        app:cornerRadius="18dp"
+        >
+    </com.google.android.material.button.MaterialButton>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/already_have_account"
+        app:cornerRadius="18dp"
+        android:backgroundTint="@color/colorSecondary"
+        android:textColor="@color/colorOnSecondary"
+        >
+    </com.google.android.material.button.MaterialButton>
+</LinearLayout>
