@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@drawable/ic_user_placeholder"
+            android:background="@color/colorSecondary"
+            >
+        </ImageView>
+        <Space
+            android:layout_width="@dimen/text_block_spacing"
+            android:layout_height="match_parent"
+            >
+        </Space>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username"
+            style="@style/Base.Theme.Savana.Text.Label1"
+            >
+        </com.google.android.material.textview.MaterialTextView>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:minWidth="@dimen/text_block_spacing"
+            >
+        </Space>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="center"
+            android:background="@color/colorSecondary"
+            >
+        </ImageView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/inner_text_block_spacing"
+        android:paddingEnd="@dimen/inner_text_block_spacing"
+        android:visibility="gone"
+        android:orientation="vertical"
+        >
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_block_spacing"
+            >
+        </Space>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exit"
+            style="@style/Base.Theme.Savana.Text.Body1"
+            android:textColor="@color/colorError"
+            >
+        </com.google.android.material.textview.MaterialTextView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

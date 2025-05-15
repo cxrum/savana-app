@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph.xml"
+    app:startDestination="@id/searchMainFragment">
+
+    <fragment
+        android:id="@+id/searchMainFragment"
+        android:name="com.savana.ui.fragments.main.search.main.SearchMainFragment"
+        android:label="fragment_search_main"
+        tools:layout="@layout/fragment_search_main"
+        />
+
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.savana.ui.fragments.main.search.loading.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading"
+        />
+
+    <fragment
+        android:id="@+id/gapSelectorFragment"
+        android:name="com.savana.ui.fragments.main.search.selection.GapSelectorFragment"
+        android:label="fragment_gap_selector"
+        tools:layout="@layout/fragment_gap_selector"
+        />
+
+    <fragment
+        android:id="@+id/recomedationsFragment"
+        android:name="com.savana.ui.fragments.main.search.recomedation.RecomedationsFragment"
+        android:label="fragment_recomedations"
+        tools:layout="@layout/fragment_recomedations"
+        />
+</navigation>

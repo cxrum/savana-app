@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="start"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true">
+    
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05"
+        >
+    </Space>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/history_title"
+        style="@style/Base.Theme.Savana.Text.Subtitle"
+        />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/inner_text_block_spacing"
+        >
+    </Space>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Base.Theme.Savana.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionSearch"
+            style="@style/Base.Theme.Savana.TextInputLayout.OutlinedBox"
+            android:inputType="text"
+            android:maxLines="1"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing"
+        >
+    </Space>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/history_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:listitem="@layout/item_history"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textAppearance="@style/Base.Theme.Savana.Text.Body1"
+        android:text="@string/your_history_empty"
+        android:gravity="center"
+        >
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <com.savana.ui.view.welcome_view.ProfileView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.savana.ui.view.welcome_view.ProfileView>
+
+    </LinearLayout>
+</LinearLayout>

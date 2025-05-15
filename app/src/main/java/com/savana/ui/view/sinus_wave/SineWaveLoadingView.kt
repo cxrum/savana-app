@@ -47,14 +47,6 @@ class SineWaveLoadingView @JvmOverloads constructor(
             invalidate()
         }
 
-    private var coef: Float = 0.1f
-        set(value) {
-            field = value
-            invalidate()
-        }
-
-
-
     private var waveLength: Float = 0f
     private var frequency: Float = 0.05f
 

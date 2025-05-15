@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.main.search.recomedation.RecomedationsFragment"
+    android:orientation="vertical"
+    >
+    
+    <ViewStub
+        android:id="@+id/diagram_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        >
+    </ViewStub>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_block_spacing">
+    </Space>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Body2"
+        android:text="@string/diagram_of_your_song"
+        >
+    </com.google.android.material.textview.MaterialTextView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_block_spacing">
+    </Space>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Title"
+        android:text="@string/your_recommendations"
+        android:textColor="@color/colorOnBackground"
+        >
+    </com.google.android.material.textview.MaterialTextView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_block_spacing">
+    </Space>
+
+    <ListView
+        android:id="@+id/song_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    </ListView>
+
+</LinearLayout>
