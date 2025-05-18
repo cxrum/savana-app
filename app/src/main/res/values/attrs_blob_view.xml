@@ -1,7 +1,9 @@
 <resources>
     <declare-styleable name="AnimatedBlobView">
         <attr name="color" format="color"/>
-        <attr name="radius" format="dimension"/>
-        <attr name="changesFrequency" format="integer"/>
+        <attr name="radiusMin" format="dimension"/>
+        <attr name="radiusMax" format="dimension"/>
+        <attr name="changeRange" format="float"/>
+        <attr name="vertexNum" format="integer"/>
     </declare-styleable>
 </resources>

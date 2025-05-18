@@ -64,7 +64,9 @@
             <com.savana.ui.view.welcome_view.AnimatedBlobView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:radius="140dp"
+                app:radiusMax="170dp"
+                app:radiusMin="150dp"
+                app:changeRange="20"
                 app:color="@color/colorAccent"
                 >
             </com.savana.ui.view.welcome_view.AnimatedBlobView>

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activities.authentication.AuthenticationActivity"
+    android:padding="16dp"
     >
 
     <androidx.fragment.app.FragmentContainerView
@@ -15,7 +16,6 @@
 
         app:defaultNavHost="true"
         app:navGraph="@navigation/authentication_nav_graph"
-        android:padding="32dp"
         >
     </androidx.fragment.app.FragmentContainerView>
 
