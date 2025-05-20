@@ -257,7 +257,7 @@ class AnimatedBlobView @JvmOverloads constructor(
                 vertices.forEach { vertex ->
 
                     val factor = animation.animatedFraction
-                    val stepAmount = Random.nextFloat() * 1.5f * factor
+                    val stepAmount = vertex.speed * factor
 
                     val dxToCenter = vertex.anchorX - centerX
                     val dyToCenter = vertex.anchorY - centerY
@@ -316,6 +316,7 @@ class AnimatedBlobView @JvmOverloads constructor(
         var controlInY: Float,
         var cornerRadius: Float = 0f,
 
-        var increaseDirection: Boolean = false
+        var increaseDirection: Boolean = false,
+        var speed: Float = 0.5f
     )
 }
