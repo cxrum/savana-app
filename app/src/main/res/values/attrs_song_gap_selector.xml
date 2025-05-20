@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SongGapSelectorView">
+        <attr name="sgs_totalDuration" format="integer" />
+        <attr name="sgs_gapDuration" format="integer" />
+        <attr name="sgs_trackHeight" format="dimension" />
+        <attr name="sgs_inactiveTrackColor" format="color" />
+        <attr name="sgs_activeTrackColor" format="color" />
+        <attr name="sgs_trackCornerRadius" format="dimension" />
+
+        <attr name="sgs_thumbColor" format="color" />
+        <attr name="sgs_thumbRadius" format="dimension" />
+        <attr name="sgs_thumbStrokeColor" format="color" />
+        <attr name="sgs_thumbStrokeWidth" format="dimension" />
+        <attr name="sgs_thumbElevation" format="dimension" />
+        <attr name="sgs_textColor" format="color" />
+        <attr name="sgs_textSize" format="dimension" />
+        <attr name="sgs_showTotalDurationText" format="boolean" />
+        <attr name="sgs_showSelectedRangeText" format="boolean" />
+
+        <attr name="sgs_innerTextMargin" format="dimension" />
     </declare-styleable>
 </resources>

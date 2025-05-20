@@ -6,7 +6,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.main.search.selection.GapSelectorFragment"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     >
+    
+    <ImageView
+        android:layout_width="214dp"
+        android:layout_height="214dp"
+        android:background="@color/colorSecondary"
+        >
+    </ImageView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_block_spacing">
+    </Space>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Title"
+        android:text="Song name placeholder"
+        >
+    </com.google.android.material.textview.MaterialTextView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing">
+    </Space>
+
+    <com.savana.ui.view.songplayer.SongGapSelectorView
+        android:id="@+id/songGapSelector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sgs_totalDuration="400"
+        app:sgs_gapDuration="30"
+        app:sgs_inactiveTrackColor="@color/colorSecondary"
+        app:sgs_activeTrackColor="@color/colorAccent"
+        app:sgs_thumbColor="@color/colorOnBackground"
+        app:sgs_thumbRadius="8dp"
+        app:sgs_trackHeight="8dp"
+        app:sgs_textColor="@color/colorOnBackground"
+        app:sgs_textSize="12sp"
+        app:sgs_showTotalDurationText="true"
+        app:sgs_showSelectedRangeText="true"
+        />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_block_spacing">
+    </Space>
+
+    <ImageButton
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:src="@drawable/ic_play"
+        android:background="@android:color/transparent"
+        app:tint="@color/colorOnBackground"
+        >
+    </ImageButton>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing">
+    </Space>
+
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"

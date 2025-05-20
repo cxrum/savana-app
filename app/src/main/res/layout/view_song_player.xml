@@ -1,6 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:minHeight="96dp"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:gravity="center_vertical"
+    android:background="@color/gray_600"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        >
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Base.Theme.Savana.Text.Subtitle"
+            android:text="Song name placeholder"
+            android:textColor="@color/colorOnBackground"
+            android:maxLines="1"
+            android:ellipsize="marquee"
+            >
+        </com.google.android.material.textview.MaterialTextView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_block_spacing">
+        </Space>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Base.Theme.Savana.Text.Label1"
+                android:text="0:00"
+                android:textColor="@color/colorOnBackground"
+                android:maxLines="1"
+                >
+            </com.google.android.material.textview.MaterialTextView>
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:layout_weight="1"
+                android:progressDrawable="@drawable/il_song_seek_bar"
+                android:progress="12"
+                android:thumbOffset="0dp"
+                android:thumb="@drawable/ic_thumb"
+                >
+            </SeekBar>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Base.Theme.Savana.Text.Label1"
+                android:text="0:00"
+                android:textColor="@color/colorOnBackground"
+                android:maxLines="1"
+                >
+            </com.google.android.material.textview.MaterialTextView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="@dimen/inner_text_block_spacing"
+        android:layout_height="match_parent">
+    </Space>
+
+    <ImageButton
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_play"
+        android:background="@android:color/transparent"
+        android:padding="6dp"
+        app:tint="@color/colorOnBackground"
+        >
+    </ImageButton>
+
+</LinearLayout>
