@@ -6,9 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import com.savana.R
 import com.savana.databinding.ActivityRegistrationBinding
 import com.savana.ui.fragments.registration.WelcomeFragment
@@ -19,7 +16,7 @@ class RegistrationActivity : AppCompatActivity() {
     private var _binding: ActivityRegistrationBinding? = null
     private val binding get() = _binding!!
 
-    private val registrationViewModel: RegistrationActivityViewModel by viewModel()
+    private val registrationViewModel: RegistrationViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

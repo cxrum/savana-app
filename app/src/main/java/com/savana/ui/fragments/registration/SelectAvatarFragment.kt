@@ -5,9 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.savana.R
+import com.savana.databinding.FragmentPasswordBinding
+import com.savana.databinding.FragmentSelectAvatarBinding
+import com.savana.ui.activities.registration.RegistrationViewModel
 
 class SelectAvatarFragment : Fragment() {
+
+    private val registrationViewModel: RegistrationViewModel by activityViewModels()
+
+
+    private var _binding: FragmentSelectAvatarBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -15,8 +26,11 @@ class SelectAvatarFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_select_avatar, container, false)
+    ): View {
+
+        _binding = FragmentSelectAvatarBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     companion object {
