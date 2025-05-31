@@ -1,5 +1,6 @@
 package com.savana.ui.view.songplayer
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -22,7 +23,11 @@ class SongGapSelectorView @JvmOverloads constructor(
 
 
     private var totalDurationSec: Int = 100
+    private var currentSec: Int = 0
     private var gapDurationSec: Int = 30
+
+    var gapDurationSecDefault: Int = 30
+        private set
 
     var currentStartSec: Int = 0
         private set
@@ -54,13 +59,21 @@ class SongGapSelectorView @JvmOverloads constructor(
     private var touchDownStartSec: Int = 0
     private var touchDownEndSec: Int = 0
 
+    private var isLoadingAnimationActive: Boolean = false
+    private var loadingAnimationProgress: Float = 0f
+    private var loadingAnimator: ValueAnimator? = null
+
+    private var loadingAnimationColor: Int = Color.DKGRAY
+    private var loadingAnimationWidthFactor: Float = 0.2f
+
+
     private enum class Thumb { START, END, RANGE  }
 
     private val startThumbRect = RectF()
     private val endThumbRect = RectF()
     private val draggableActiveTrackRect = RectF()
 
-    var onRangeChangedListener: ((startSec: Int, endSec: Int) -> Unit)? = null
+    private var onRangeChangedListener: ((startSec: Int, endSec: Int) -> Unit)? = null
 
     init {
         loadAttributes(attrs, defStyleAttr)
@@ -96,6 +109,9 @@ class SongGapSelectorView @JvmOverloads constructor(
                 showSelectedRangeText = getBoolean(R.styleable.SongGapSelectorView_sgs_showSelectedRangeText, showSelectedRangeText)
             }
         }
+
+        gapDurationSecDefault = gapDurationSec
+
         gapDurationSec = min(gapDurationSec, totalDurationSec)
     }
 
@@ -185,7 +201,11 @@ class SongGapSelectorView @JvmOverloads constructor(
 
             if (showTotalDurationText) {
                 textPaint.textAlign = Paint.Align.RIGHT
-                canvas.drawText(formatTime(totalDurationSec), viewWidth - textPaint.textSize - 5f.dpToPx(), trackY + textPaint.textSize + textMargin.dpToPx(), textPaint)
+                canvas.drawText(formatTime(totalDurationSec), viewWidth - textPaint.textSize - 4f.dpToPx(), trackY + textPaint.textSize + textMargin.dpToPx(), textPaint)
+                textPaint.textAlign = Paint.Align.CENTER
+
+                textPaint.textAlign = Paint.Align.LEFT
+                canvas.drawText(formatTime(currentSec), textPaint.textSize + 4f.dpToPx(), trackY + textPaint.textSize + textMargin.dpToPx(), textPaint)
                 textPaint.textAlign = Paint.Align.CENTER
             }
         }
@@ -284,8 +304,8 @@ class SongGapSelectorView @JvmOverloads constructor(
                         }
                         null -> {}
                     }
+
                     if (needsUpdate) {
-                        onRangeChangedListener?.invoke(currentStartSec, currentEndSec)
                         invalidate()
                     }
                     return true
@@ -294,6 +314,7 @@ class SongGapSelectorView @JvmOverloads constructor(
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 if (activeThumb != null) {
                     activeThumb = null
+                    onRangeChangedListener?.invoke(currentStartSec, currentEndSec)
                     parent.requestDisallowInterceptTouchEvent(false)
                     return true
                 }
@@ -310,6 +331,7 @@ class SongGapSelectorView @JvmOverloads constructor(
         currentStartSec = max(0, currentStartSec)
         currentEndSec = currentStartSec + gapDurationSec
         currentEndSec = min(currentEndSec, totalDurationSec)
+        setGapDuration(gapDurationSecDefault)
         invalidate()
     }
 
@@ -326,7 +348,7 @@ class SongGapSelectorView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun setCurrentStartPosition(startSeconds: Int) {
+    private fun setCurrentStartPosition(startSeconds: Int) {
         if (totalDurationSec <= 0) return
         var newStart = max(0, min(startSeconds, totalDurationSec - gapDurationSec))
         if (newStart < 0) newStart = 0
@@ -349,11 +371,26 @@ class SongGapSelectorView @JvmOverloads constructor(
         return Pair(currentStartSec, currentEndSec)
     }
 
+    fun onRangeChanged(action: (startSec: Int, endSec: Int) -> Unit){
+        onRangeChangedListener = action
+    }
+
+    fun seekGapStartTo(startSec: Int){
+        setCurrentStartPosition(startSec)
+        onRangeChangedListener?.invoke(startSec, startSec+gapDurationSec)
+    }
+
+    fun setCurrentPlayedSeconds(seconds: Int){
+        if (seconds < 0) return
+        currentSec = seconds
+        invalidate()
+    }
 
     private fun Float.dpToPx(): Float = this * resources.displayMetrics.density
     private fun Float.spToPx(): Float = this * resources.displayMetrics.scaledDensity
 
     private fun formatTime(seconds: Int): String {
+        if (seconds == 0) return "0:00"
         val minutes = seconds / 60
         val remainingSeconds = seconds % 60
         return String.format("%d:%02d", minutes, remainingSeconds)
