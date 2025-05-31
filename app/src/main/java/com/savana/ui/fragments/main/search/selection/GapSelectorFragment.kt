@@ -62,8 +62,6 @@ class GapSelectorFragment : Fragment() {
 
         navController = findNavController()
 
-        binding.songGapSelector.startLoadingAnimation()
-
         val audioUri = args.audioUri
         val fileName = args.fileName
 
@@ -79,14 +77,15 @@ class GapSelectorFragment : Fragment() {
 
     private fun setupUIFromState(){
         val cover = gapSelectionViewModel.state.value.cover
-        val totalDuration = audioPlayerViewModel.totalDurationSec.value
         val currentSec = audioPlayerViewModel.currentPositionSec.value
         val gapStartSec = gapSelectionViewModel.state.value.startSec
 
-        setCover(cover)
-        setGapDuration(totalDuration)
-        setCurrentSecond(currentSec)
-        binding.songGapSelector.seekGapStartTo(gapStartSec ?: 0)
+        audioPlayerViewModel.seekToSec(currentSec)
+        gapSelectionViewModel.setCover(cover)
+
+        if (gapStartSec!=null){
+            gapSelectionViewModel.onRangeSelected(gapStartSec, gapStartSec+MIN_DURATION_SECONDS)
+        }
     }
 
     private fun setupUIListeners() {
@@ -138,7 +137,6 @@ class GapSelectorFragment : Fragment() {
                 launch {
                     audioPlayerViewModel.isAudioPrepared.collect { isPrepared ->
                         if (isPrepared) {
-                            binding.songGapSelector.stopLoadingAnimation()
                             audioPlayerViewModel.seekToSec(0)
                         }
                     }
@@ -183,6 +181,12 @@ class GapSelectorFragment : Fragment() {
                             Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
                             gapSelectionViewModel.clearError()
                         }
+
+                        if(state.isLoading){
+                            startLoadingAnimation()
+                        }else{
+                            stopLoadingAnimation()
+                        }
                     }
                 }
 
@@ -196,9 +200,16 @@ class GapSelectorFragment : Fragment() {
                         gapSelectionViewModel.setCover(extractedArtworkData?.getBitMap())
                     }
                 }
-
             }
         }
+    }
+
+    private fun startLoadingAnimation(){
+        binding.songGapSelector.startLoadingAnimation()
+    }
+
+    private fun stopLoadingAnimation(){
+        binding.songGapSelector.stopLoadingAnimation()
     }
 
     private fun setTotalDuration(seconds: Int){

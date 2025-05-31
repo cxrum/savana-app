@@ -1,6 +1,5 @@
 package com.savana.ui.fragments.main.search.selection
 
-import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
@@ -11,15 +10,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.util.UnstableApi
 import com.savana.R
-import com.savana.core.exeption.SongToShortException
-import com.savana.core.extension.getBitMap
-import com.savana.core.player.MusicPlayerManager
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
@@ -58,6 +51,8 @@ class GapSelectionViewModel : ViewModel() {
                 _state.value = _state.value.copy(isLoading = false, errorMessage = e.message ?: context.getString(
                     R.string.file_does_not_open
                 ))
+            }finally {
+                _state.value = _state.value.copy(isLoading = false)
             }
         }
     }
@@ -115,7 +110,4 @@ class GapSelectionViewModel : ViewModel() {
         _state.value = _state.value.copy(errorMessage = null)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-    }
 }
