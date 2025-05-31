@@ -2,34 +2,75 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_nav_graph.xml"
-    app:startDestination="@id/searchMainFragment">
+    android:id="@+id/main_nav_graph" app:startDestination="@id/searchMainFragment">
 
     <fragment
         android:id="@+id/searchMainFragment"
         android:name="com.savana.ui.fragments.main.search.main.SearchMainFragment"
         android:label="fragment_search_main"
-        tools:layout="@layout/fragment_search_main"
-        />
+        tools:layout="@layout/fragment_search_main">
+        <action
+            android:id="@+id/action_searchMainFragment_to_gapSelectorFragment"
+            app:destination="@id/gapSelectorFragment"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/loadingFragment"
         android:name="com.savana.ui.fragments.main.search.loading.LoadingFragment"
         android:label="fragment_loading"
-        tools:layout="@layout/fragment_loading"
-        />
+        tools:layout="@layout/fragment_loading">
+        <action
+            android:id="@+id/action_loadingFragment_to_recomedationsFragment"
+            app:destination="@id/recomedationsFragment"
+            app:popUpTo="@id/loadingFragment"
+            app:popUpToInclusive="true"
+            />
+        <action
+        android:id="@+id/action_loadingFragment_to_gapSelectorFragment"
+        app:destination="@id/gapSelectorFragment"
+        app:popUpTo="@id/loadingFragment"
+        app:popUpToInclusive="true"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/gapSelectorFragment"
         android:name="com.savana.ui.fragments.main.search.selection.GapSelectorFragment"
         android:label="fragment_gap_selector"
-        tools:layout="@layout/fragment_gap_selector"
-        />
+        tools:layout="@layout/fragment_gap_selector">
+
+        <argument
+            android:name="file_name"
+            app:argType="string"
+            app:nullable="true"
+            />
+        <argument
+            android:name="audio_uri"
+            app:argType="android.net.Uri"
+            app:nullable="true"
+            />
+
+        <action
+            android:id="@+id/action_gapSelectorFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment"
+            />
+        <action
+            android:id="@+id/action_gapSelectorFragment_to_searchMainFragment"
+            app:destination="@id/searchMainFragment"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/recomedationsFragment"
-        android:name="com.savana.ui.fragments.main.search.recomedation.RecomedationsFragment"
+        android:name="com.savana.ui.fragments.main.search.recomedation.RecommendationsFragment"
         android:label="fragment_recomedations"
-        tools:layout="@layout/fragment_recomedations"
-        />
+        tools:layout="@layout/fragment_recomedations">
+        <action
+            android:id="@+id/action_recomedationsFragment_to_gapSelectorFragment"
+            app:destination="@id/gapSelectorFragment"
+            app:popUpTo="@id/action_recomedationsFragment_to_gapSelectorFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
 </navigation>
