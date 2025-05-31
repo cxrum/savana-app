@@ -1,6 +1,5 @@
 package com.savana.ui.view.songplayer
 
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -58,14 +57,6 @@ class SongGapSelectorView @JvmOverloads constructor(
     private var touchDownX: Float = 0f
     private var touchDownStartSec: Int = 0
     private var touchDownEndSec: Int = 0
-
-    private var isLoadingAnimationActive: Boolean = false
-    private var loadingAnimationProgress: Float = 0f
-    private var loadingAnimator: ValueAnimator? = null
-
-    private var loadingAnimationColor: Int = Color.DKGRAY
-    private var loadingAnimationWidthFactor: Float = 0.2f
-
 
     private enum class Thumb { START, END, RANGE  }
 
