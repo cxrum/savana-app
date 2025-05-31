@@ -1,5 +1,6 @@
 package com.savana.ui.view.songplayer
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -57,6 +58,13 @@ class SongGapSelectorView @JvmOverloads constructor(
     private var touchDownX: Float = 0f
     private var touchDownStartSec: Int = 0
     private var touchDownEndSec: Int = 0
+
+    private var isLoadingAnimationActive: Boolean = false
+    private var loadingAnimationProgress: Float = 0f
+    private var loadingAnimator: ValueAnimator? = null
+
+    private var loadingAnimationColor: Int = Color.DKGRAY
+    private var loadingAnimationWidthFactor: Float = 0.2f
 
     private enum class Thumb { START, END, RANGE  }
 
@@ -119,23 +127,44 @@ class SongGapSelectorView @JvmOverloads constructor(
         val viewWidth = width.toFloat()
         val viewHeight = height.toFloat()
 
-        val paddingStart = thumbRadius + textPaint.textSize/2
-        val paddingEnd = thumbRadius + textPaint.textSize/2
+        val paddingStart = thumbRadius + textPaint.textSize / 2
+        val paddingEnd = thumbRadius + textPaint.textSize / 2
         val drawableWidth = viewWidth - paddingStart - paddingEnd
-
         val trackY = viewHeight / 2f
 
         trackPaint.color = inactiveTrackColor
         val inactiveTrackRect = RectF(paddingStart, trackY - trackHeight / 2, paddingStart + drawableWidth, trackY + trackHeight / 2)
         canvas.drawRoundRect(inactiveTrackRect, trackCornerRadius, trackCornerRadius, trackPaint)
 
-        if (totalDurationSec > 0) {
+        if (isLoadingAnimationActive && drawableWidth > 0) {
+            trackPaint.color = loadingAnimationColor
+
+            val animationWaveWidth = drawableWidth * loadingAnimationWidthFactor
+
+            val animationStartOffset = (drawableWidth + animationWaveWidth) * loadingAnimationProgress - animationWaveWidth
+            val animationStartX = paddingStart + animationStartOffset
+            val animationEndX = animationStartX + animationWaveWidth
+
+            val clippedAnimationStartX = max(paddingStart, animationStartX)
+            val clippedAnimationEndX = min(paddingStart + drawableWidth, animationEndX)
+
+            if (clippedAnimationStartX < clippedAnimationEndX) {
+                val loadingRect = RectF(
+                    clippedAnimationStartX,
+                    trackY - trackHeight / 2,
+                    clippedAnimationEndX,
+                    trackY + trackHeight / 2
+                )
+                canvas.drawRoundRect(loadingRect, trackCornerRadius, trackCornerRadius, trackPaint)
+            }
+        }
+
+        if (totalDurationSec > 0 /* && !isLoadingAnimationActive */) { // Можливо, не малювати активний трек під час анімації
             val startPixel = paddingStart + (currentStartSec.toFloat() / totalDurationSec) * drawableWidth
             val endPixel = paddingStart + (currentEndSec.toFloat() / totalDurationSec) * drawableWidth
 
             trackPaint.color = activeTrackColor
             val activeTrackRect = RectF(startPixel, trackY - trackHeight / 2, endPixel, trackY + trackHeight / 2)
-
             canvas.drawRoundRect(activeTrackRect, trackCornerRadius, trackCornerRadius, trackPaint)
 
             val draggableTrackVerticalPadding = trackHeight * 0.5f
@@ -162,23 +191,19 @@ class SongGapSelectorView @JvmOverloads constructor(
                 canvas.drawCircle(endPixel, trackY, thumbRadius, thumbPaint)
             }
 
-            textPaint.color = textColor
-            val textY = trackY - thumbRadius - 8f.dpToPx()
+            if (showSelectedRangeText && !isLoadingAnimationActive) {
+                textPaint.color = textColor
+                val defaultTextY = trackY - thumbRadius - 8f.dpToPx()
+                var startTextY = defaultTextY
+                var endTextY = defaultTextY
 
-            val defaultTextY = trackY - thumbRadius - 8f.dpToPx()
-            val startTextY = defaultTextY
-            var endTextY = defaultTextY
-
-            val startTimeText = formatTime(currentStartSec)
-            val endTimeText = formatTime(currentEndSec)
-
-            if (showSelectedRangeText) {
+                val startTimeText = formatTime(currentStartSec)
+                val endTimeText = formatTime(currentEndSec)
                 val startTimeTextWidth = textPaint.measureText(startTimeText)
                 val endTimeTextWidth = textPaint.measureText(endTimeText)
 
                 val startTimeTextRightEdge = startPixel + startTimeTextWidth / 2
                 val endTimeTextLeftEdge = endPixel - endTimeTextWidth / 2
-
                 val textSpacingBuffer = 4f.dpToPx()
 
                 if (startTimeTextRightEdge + textSpacingBuffer > endTimeTextLeftEdge) {
@@ -190,13 +215,14 @@ class SongGapSelectorView @JvmOverloads constructor(
                 canvas.drawText(endTimeText, endPixel, endTextY, textPaint)
             }
 
-            if (showTotalDurationText) {
+            if (showTotalDurationText && !isLoadingAnimationActive) {
+                textPaint.color = textColor
                 textPaint.textAlign = Paint.Align.RIGHT
-                canvas.drawText(formatTime(totalDurationSec), viewWidth - textPaint.textSize - 4f.dpToPx(), trackY + textPaint.textSize + textMargin.dpToPx(), textPaint)
-                textPaint.textAlign = Paint.Align.CENTER
+                val durationTextY = inactiveTrackRect.bottom + textPaint.textSize + 4f.dpToPx()
+                canvas.drawText(formatTime(totalDurationSec), viewWidth - paddingEnd + thumbRadius, durationTextY, textPaint)
 
                 textPaint.textAlign = Paint.Align.LEFT
-                canvas.drawText(formatTime(currentSec), textPaint.textSize + 4f.dpToPx(), trackY + textPaint.textSize + textMargin.dpToPx(), textPaint)
+                canvas.drawText(formatTime(currentSec), paddingStart - thumbRadius, durationTextY, textPaint)
                 textPaint.textAlign = Paint.Align.CENTER
             }
         }
@@ -312,6 +338,37 @@ class SongGapSelectorView @JvmOverloads constructor(
             }
         }
         return super.onTouchEvent(event)
+    }
+
+
+    fun startLoadingAnimation() {
+        if (isLoadingAnimationActive) return
+
+        isLoadingAnimationActive = true
+        loadingAnimator?.cancel()
+
+        loadingAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 1500
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.RESTART
+
+            addUpdateListener { animation ->
+                loadingAnimationProgress = animation.animatedValue as Float
+                invalidate()
+            }
+            start()
+        }
+        invalidate()
+    }
+
+    fun stopLoadingAnimation() {
+        if (!isLoadingAnimationActive) return
+
+        isLoadingAnimationActive = false
+        loadingAnimator?.cancel()
+        loadingAnimator = null
+        loadingAnimationProgress = 0f
+        invalidate()
     }
 
     fun setTotalDuration(seconds: Int) {

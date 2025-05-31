@@ -62,14 +62,15 @@ class GapSelectorFragment : Fragment() {
 
         navController = findNavController()
 
-//        val audioUri = args.audioUri
-//        val fileName = args.fileName
-//
-//        if (audioUri != null && fileName != null){
-//            gapSelectionViewModel.loadAudioFile(audioUri, requireActivity().contentResolver, requireContext())
-//            gapSelectionViewModel.setFilename(fileName)
-//        }
+        binding.songGapSelector.startLoadingAnimation()
 
+        val audioUri = args.audioUri
+        val fileName = args.fileName
+
+        if (audioUri != null && fileName != null){
+            gapSelectionViewModel.loadAudioFile(audioUri, requireActivity().contentResolver, requireContext())
+            gapSelectionViewModel.setFilename(fileName)
+        }
 
         setupUIFromState()
         setupUIListeners()
@@ -137,6 +138,7 @@ class GapSelectorFragment : Fragment() {
                 launch {
                     audioPlayerViewModel.isAudioPrepared.collect { isPrepared ->
                         if (isPrepared) {
+                            binding.songGapSelector.stopLoadingAnimation()
                             audioPlayerViewModel.seekToSec(0)
                         }
                     }
