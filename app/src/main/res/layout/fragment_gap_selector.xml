@@ -4,41 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.main.search.selection.GapSelectorFragment"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     >
-    
+
     <ImageView
+        android:id="@+id/album_art_image_view"
         android:layout_width="214dp"
         android:layout_height="214dp"
         android:background="@color/colorSecondary"
-        >
-    </ImageView>
+        android:src="@drawable/bg_music_album_placehoder"
+        android:scaleType="fitCenter"
+        />
 
     <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/text_block_spacing">
-    </Space>
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/text_block_spacing"
+        />
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
+        android:id="@+id/song_name_text_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Base.Theme.Savana.Text.Title"
-        android:text="Song name placeholder"
-        >
-    </com.google.android.material.textview.MaterialTextView>
+        android:text="@string/unknown_track"
+        android:maxLines="2"
+        android:ellipsize="marquee"
+        android:textAlignment="center"
+        />
+
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/blocked_item_spacing">
-    </Space>
+        android:layout_height="@dimen/text_block_spacing"/>
+
 
     <com.savana.ui.view.songplayer.SongGapSelectorView
         android:id="@+id/songGapSelector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:sgs_totalDuration="400"
+        app:sgs_totalDuration="0"
         app:sgs_gapDuration="30"
         app:sgs_inactiveTrackColor="@color/colorSecondary"
         app:sgs_activeTrackColor="@color/colorAccent"
@@ -53,47 +58,46 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/text_block_spacing">
-    </Space>
+        android:layout_height="@dimen/text_block_spacing"/>
 
     <ImageButton
+        android:id="@+id/play_pause_button"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:src="@drawable/ic_play"
         android:background="@android:color/transparent"
         app:tint="@color/colorOnBackground"
-        >
-    </ImageButton>
+        android:scaleType="fitCenter"
+        />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/blocked_item_spacing">
-    </Space>
-
+        android:layout_height="@dimen/blocked_item_spacing"
+        />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirm_button_action"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:text="@string/confirm"
         app:cornerRadius="18dp"
-        >
-    </com.google.android.material.button.MaterialButton>
+        android:enabled="false"
+        />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/confirm_button"
+        android:id="@+id/confirm_button_text_restriction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Base.Theme.Savana.Text.Body2"
         android:text="@string/song_length_restriction"
         android:textAlignment="center"
-        >
-    </com.google.android.material.textview.MaterialTextView>
+        />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/blocked_item_spacing">
-    </Space>
-    
+        android:layout_height="@dimen/blocked_item_spacing"
+        />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/select_another_file_button"
         android:layout_width="match_parent"
@@ -102,8 +106,7 @@
         app:cornerRadius="18dp"
         android:backgroundTint="@color/colorSecondary"
         android:textColor="@color/colorOnSecondary"
-        >
-    </com.google.android.material.button.MaterialButton>
+        />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancel_button"
@@ -113,8 +116,6 @@
         app:cornerRadius="18dp"
         android:backgroundTint="@color/colorSecondary"
         android:textColor="@color/colorOnSecondary"
-        >
-    </com.google.android.material.button.MaterialButton>
-
+        />
 
 </LinearLayout>

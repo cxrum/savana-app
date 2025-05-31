@@ -26,6 +26,7 @@
     </Space>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirm_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:text="@string/confirm"
@@ -33,13 +34,4 @@
         >
     </com.google.android.material.button.MaterialButton>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:text="@string/already_have_account"
-        app:cornerRadius="18dp"
-        android:backgroundTint="@color/colorSecondary"
-        android:textColor="@color/colorOnSecondary"
-        >
-    </com.google.android.material.button.MaterialButton>
 </LinearLayout>

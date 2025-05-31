@@ -7,46 +7,74 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.registration.RegistrationActivity"
     android:orientation="vertical"
-    android:padding="16dp"
-
     >
-    <com.savana.ui.view.step_bar.StepBarView
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:padding="8dp"
-        >
-    </com.savana.ui.view.step_bar.StepBarView>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/inner_text_block_spacing">
-    </Space>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:icon="@drawable/ic_back_arrow"
-        app:iconTint="@color/colorOnBackground"
-        android:text="@string/go_back"
-        android:textColor="@color/colorOnBackground"
-        android:padding="8dp"
-        >
-    </com.google.android.material.button.MaterialButton>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/blocked_item_spacing">
-    </Space>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment_container"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/registration_nav_graph"
+        android:paddingTop="16dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingBottom="16dp"
+        android:orientation="vertical"
         >
-    </androidx.fragment.app.FragmentContainerView>
+
+        <LinearLayout
+            android:id="@+id/tob_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical"
+            >
+
+            <com.savana.ui.view.step_bar.StepBarView
+                android:id="@+id/step_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:step_height="16dp"
+                app:maxStep="4"
+                app:step_corner="16dp"
+                app:inactive_step_color="@color/colorSecondary"
+                app:step_color="@color/colorOnBackground"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/inner_text_block_spacing"
+                >
+            </Space>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/go_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:icon="@drawable/ic_back_arrow"
+                app:iconTint="@color/colorOnBackground"
+                android:text="@string/go_back"
+                android:textColor="@color/colorOnBackground"
+                android:padding="8dp"
+                >
+            </com.google.android.material.button.MaterialButton>
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/blocked_item_spacing">
+        </Space>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/registration_nav_graph"
+            >
+        </androidx.fragment.app.FragmentContainerView>
+
+    </LinearLayout>
 
 </LinearLayout>

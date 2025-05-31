@@ -27,8 +27,8 @@
         style="@style/Base.Theme.Savana.TextInputLayout.OutlinedBox"
         android:hint="@string/name"
         >
-
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
@@ -37,10 +37,27 @@
 
     <Space
         android:layout_width="match_parent"
+        android:layout_height="@dimen/inner_text_block_spacing">
+    </Space>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Body1"
+        android:textColor="@color/colorError"
+        android:paddingStart="@dimen/inner_text_block_spacing"
+        android:paddingEnd="@dimen/inner_text_block_spacing"
+        >
+    </com.google.android.material.textview.MaterialTextView>
+
+    <Space
+        android:layout_width="match_parent"
         android:layout_height="@dimen/block_spacing">
     </Space>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirm_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:text="@string/confirm"

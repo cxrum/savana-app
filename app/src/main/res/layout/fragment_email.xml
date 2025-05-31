@@ -29,6 +29,7 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -37,10 +38,27 @@
 
     <Space
         android:layout_width="match_parent"
+        android:layout_height="@dimen/inner_text_block_spacing">
+    </Space>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Body1"
+        android:textColor="@color/colorError"
+        android:paddingStart="@dimen/inner_text_block_spacing"
+        android:paddingEnd="@dimen/inner_text_block_spacing"
+        >
+    </com.google.android.material.textview.MaterialTextView>
+
+    <Space
+        android:layout_width="match_parent"
         android:layout_height="@dimen/block_spacing">
     </Space>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirm_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:text="@string/next_step"
@@ -49,6 +67,7 @@
     </com.google.android.material.button.MaterialButton>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancel"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:text="@string/already_have_account"
