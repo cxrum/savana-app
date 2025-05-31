@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.konan.properties.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -85,5 +86,9 @@ dependencies {
     implementation(libs.converter.scalars)
 
     implementation(libs.mpandroidchart)
+
+    implementation (libs.androidx.media3.exoplayer)
+    implementation (libs.androidx.media3.ui)
+    implementation (libs.androidx.media3.datasource)
 
 }
