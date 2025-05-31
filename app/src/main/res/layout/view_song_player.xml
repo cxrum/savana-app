@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,6 +9,7 @@
     android:padding="8dp"
     android:gravity="center_vertical"
     android:background="@color/gray_600"
+    tools:parentTag="android.widget.LinearLayout"
     >
 
     <LinearLayout
@@ -17,6 +19,7 @@
         android:layout_weight="1"
         >
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/song_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Base.Theme.Savana.Text.Subtitle"
@@ -39,6 +42,7 @@
             android:gravity="center_vertical"
             >
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/current_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.Theme.Savana.Text.Label1"
@@ -49,6 +53,7 @@
             </com.google.android.material.textview.MaterialTextView>
 
             <SeekBar
+                android:id="@+id/seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="100"
@@ -61,6 +66,7 @@
             </SeekBar>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/total_duration_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.Theme.Savana.Text.Label1"
@@ -78,6 +84,7 @@
     </Space>
 
     <ImageButton
+        android:id="@+id/togle_play"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:scaleType="fitCenter"
@@ -88,4 +95,4 @@
         >
     </ImageButton>
 
-</LinearLayout>
+</merge>

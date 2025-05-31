@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="280dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="start"
     android:background="@color/backgroundColor"
     android:orientation="vertical"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:padding="16dp"
+
+    >
     
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.05"
+        android:layout_weight="0.02"
         >
     </Space>
 

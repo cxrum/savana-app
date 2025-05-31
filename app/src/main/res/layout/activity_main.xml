@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:layout_margin="16dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,19 +62,19 @@
 
     <LinearLayout
         android:id="@+id/navigation_drawer_content_wrapper"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/backgroundColor"
         android:orientation="vertical"
         android:clickable="true"
         android:focusable="true"
-        android:padding="16dp"
         >
         <include
             layout="@layout/layer_history"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            />
     </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

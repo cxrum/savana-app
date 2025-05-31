@@ -9,6 +9,7 @@
     <color name="colorButtonNormal">#1D1D1D</color>
     <color name="colorOnBackground">#1D1D1D</color>
     <color name="colorError">#E65656</color>
+    <color name="colorSuccess">#92C470</color>
     <color name="colorOnPrimary">#FFF6ED</color>
 
     <color name="colorOutline">#1D1D1D</color>

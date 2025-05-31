@@ -11,8 +11,11 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.core.content.withStyledAttributes
 import com.savana.R
+import com.savana.core.extension.pxToDp
 import kotlin.math.PI
 import kotlin.math.cos
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.math.tan
@@ -84,15 +87,14 @@ class AnimatedBlobView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val desiredWidth = (maxRadius * 2).toInt() + paddingLeft + paddingRight
-        val desiredHeight = (maxRadius * 2).toInt() + paddingTop + paddingBottom
+        val desiredWidth = (maxRadius * 2).toInt() - (paddingLeft + paddingRight)
+        val desiredHeight = (maxRadius * 2).toInt() - (paddingTop + paddingBottom)
 
         setMeasuredDimension(
             resolveSize(desiredWidth, widthMeasureSpec),
             resolveSize(desiredHeight, heightMeasureSpec)
         )
     }
-
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -134,8 +136,10 @@ class AnimatedBlobView @JvmOverloads constructor(
         for (i in 0 until numVertices) {
             val angle = i * angleStep
 
-            val ax = centerX + baseRadius * cos(angle)
-            val ay = centerY + baseRadius * sin(angle)
+            val random = Random.nextInt()%changeRate
+
+            val ax = centerX + (baseRadius+random) * cos(angle)
+            val ay = centerY + (baseRadius+random) * sin(angle)
 
             vertices.add(
                 BlobVertex(
@@ -235,7 +239,6 @@ class AnimatedBlobView @JvmOverloads constructor(
     }
 
     private var animator: ValueAnimator? = null
-
     private fun startAnimation() {
         animator?.cancel()
         animator = ValueAnimator.ofFloat(0f, 1f).apply {
@@ -251,8 +254,8 @@ class AnimatedBlobView @JvmOverloads constructor(
                 val centerX = width / 2f
                 val centerY = height / 2f
 
-                val animationMaxRadius = maxRadius-changeRate
-                val animationMinRadius = minRadius-changeRate
+                val animationMaxRadius = maxRadius - changeRate
+                val animationMinRadius = minRadius
 
                 vertices.forEach { vertex ->
 

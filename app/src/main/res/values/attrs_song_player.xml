@@ -1,4 +1,6 @@
 <resources>
-    <declare-styleable name="SongPlayer">
+    <declare-styleable name="SongPlayerView">
+        <attr name="trackTitle" format="string"/>
+        <attr name="totalDuration" format="integer"/>
     </declare-styleable>
 </resources>

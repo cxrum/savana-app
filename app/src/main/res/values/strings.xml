@@ -32,4 +32,19 @@
     <string name="enter_nickname">Enter nickname</string>
     <string name="enter_password">Enter password</string>
     <string name="go_back">Go back</string>
+    <string name="file_does_not_open">The file cannot be opened</string>
+    <string name="unknown_track">Unknown Track</string>
+    <string name="audio_file_not_loaded">Audio file is not loaded</string>
+    <string name="the_song_too_short_exeption">The song is too short!</string>
+    <string name="correct_email_msg">Email is correct</string>
+    <string name="password_too_short">Password too short!</string>
+    <string name="password_too_long">Password too long!</string>
+    <string name="password_must_contest_one_upper_letter">Password must contest one upper letter!</string>
+    <string name="password_must_contest_one_lower_letter">Password must contest one lower letter!</string>
+    <string name="password_must_contest_one_digit">Password must contest one digit!</string>
+    <string name="password_must_contest_one_spec_symbol">Password must contest one spec symbol!</string>
+    <string name="nickname_cannot_be_empty">Nickname cannot be empty</string>
+    <string name="password_cannot_be_empty">Password cannot be empty</string>
+    <string name="email_cannot_be_empty">Email cannot be empty</string>
+    <string name="email_is_not_correct">Email is not correct!</string>
 </resources>
