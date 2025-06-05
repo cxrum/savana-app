@@ -26,7 +26,9 @@ val appMainModule = module {
     }
 
     viewModel {
-        RecommendationViewModel()
+        RecommendationViewModel(
+            get()
+        )
     }
 
     viewModel {

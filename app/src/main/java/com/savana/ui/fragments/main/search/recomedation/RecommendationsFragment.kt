@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Space
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.media3.common.util.UnstableApi
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.charts.RadarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -17,11 +19,13 @@ import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.savana.databinding.FragmentRecomedationsBinding
+import com.savana.databinding.ViewSongPlayerBinding
+import com.savana.domain.models.RecommendedTrack
 import com.savana.ui.activities.main.MainViewModel
 import com.savana.ui.fragments.main.search.main.RadarChartData
 import com.savana.ui.fragments.main.search.main.charDataPlaceholder
-import com.savana.ui.fragments.main.search.recomedation.componets.RecommendationListAdapter
 import com.savana.ui.player.AudioPlayerViewModel
+import com.savana.ui.view.songplayer.SongPlayerView
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -37,7 +41,7 @@ class RecommendationsFragment : Fragment() {
     private var _binding: FragmentRecomedationsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapter: RecommendationListAdapter
+    private val activeSongPlayerViews = mutableMapOf<Int, SongPlayerView>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,42 +54,108 @@ class RecommendationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupAdapter()
         setupListeners()
         setupObservers()
 
         setChartData(charDataPlaceholder)
-    }
-
-    private fun setupAdapter(){
-        adapter = RecommendationListAdapter(
-            onPlayPauseClicked = { track, position, wantsToPlay ->  
-
-            },
-            onItemClicked = { track, position ->  
-
-            },
-            onSeekOccurred = { track, position, newProgressSeconds ->
-                
-            }
-        )
-        binding.songList.adapter = adapter
+        recommendationViewModel.setUpList()
     }
 
     private fun setupListeners(){
 
     }
 
-    private fun setupObservers(){
+    private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
 
                 launch {
-                    recommendationViewModel.charData.collect{ data ->
+                    recommendationViewModel.charData.collect { data ->
                         setChartData(data)
                     }
                 }
 
+                launch {
+                    recommendationViewModel.state.collect { state ->
+                        val trackIdToPlay = state.currentPlayingTrackId
+                        val currentTracks = recommendationViewModel.tracks.value
+
+                        if (trackIdToPlay != null) {
+                            val trackData = currentTracks[trackIdToPlay]
+                            if (trackData?.bytesArray != null) {
+                                songPlayerView.prepareAudio(trackData.bytesArray)
+                                songPlayerView.seekToSec(trackData.currentSecond)
+                                if (trackData.isPlaying) {
+                                    songPlayerView.play()
+                                } else {
+                                    songPlayerView.pause()
+                                }
+                            } else {
+                                songPlayerView.pause()
+                            }
+                        } else {
+                            songPlayerView.pause()
+                        }
+                        updateAllPlayerViewsPlayingState(currentTracks.values.toList(), trackIdToPlay)
+                    }
+                }
+
+                launch {
+                    recommendationViewModel.tracks.collect { tracks ->
+                        displayRecommendedTracks(tracks.values.toList(),)
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun displayRecommendedTracks(tracks: List<RecommendedTrack>) {
+        binding.recommendationsContainer.removeAllViews()
+        activeSongPlayerViews.clear()
+
+        val currentlyPlayingTrackIdFromState = recommendationViewModel.state.value.currentPlayingTrackId
+
+        tracks.forEach { track ->
+            val playerView = SongPlayerView(requireContext())
+            activeSongPlayerViews[track.id] = playerView
+
+            playerView.apply {
+                setSongName(track.trackTitle)
+                setTotalDurationSeconds(track.totalDurationSeconds)
+                setCurrentProgressSeconds(track.currentSecond)
+
+                val isThisTrackActuallyPlaying = track.id == currentlyPlayingTrackIdFromState && track.isPlaying
+                setPlayingState(isThisTrackActuallyPlaying)
+
+                onPlayPauseToggleListener = { wantsToPlay ->
+                    recommendationViewModel.setTrackPlayingState(track.id, wantsToPlay)
+                }
+
+                onSeekBarChangedByUserListener = { newProgressSeconds ->
+                    val currentActiveTrackIdInVm = recommendationViewModel.state.value.currentPlayingTrackId
+
+                    recommendationViewModel.setCurrentSecond(track.id, newProgressSeconds)
+                    if (track.id != currentActiveTrackIdInVm) {
+                        recommendationViewModel.setTrackPlayingState(track.id, true)
+                    } else {
+                        songPlayerView.seekToSec(newProgressSeconds)
+                    }
+                }
+            }
+            binding.recommendationsContainer.addView(playerView)
+        }
+    }
+
+    private fun updateAllPlayerViewsPlayingState(tracks: List<RecommendedTrack>, currentlyPlayingTrackId: Int?) {
+        tracks.forEach { track ->
+            val playerView = activeSongPlayerViews[track.id]
+            val isPlayingThisTrack = track.id == currentlyPlayingTrackId && track.isPlaying
+            playerView?.setPlayingState(isPlayingThisTrack)
+            if (isPlayingThisTrack) {
+                playerView?.setCurrentProgressSeconds(track.currentSecond)
+            } else if (playerView?.isActuallyPlaying == true) {
+                playerView.setPlayingState(false)
             }
         }
     }

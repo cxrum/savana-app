@@ -30,7 +30,7 @@ class MainViewModel(
 
             try {
                 val result: RecommendationResponse = recommendationRepository.fetchData()!!
-                delay(10*1000L)
+                delay(600L)
                 _recommendationResult.value = OperationState.Success(result)
 
             } catch (e: Exception) {

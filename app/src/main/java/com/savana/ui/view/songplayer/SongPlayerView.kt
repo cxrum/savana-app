@@ -32,7 +32,10 @@ class SongPlayerView @JvmOverloads constructor(
 
     private var currentProgressSeconds: Int = 0
     private var totalDurationSeconds: Int = 0
-    private var isActuallyPlaying: Boolean = false
+
+    var isActuallyPlaying: Boolean = false
+        private set
+
     private var songTitle: String = ""
 
     @DrawableRes private var playIconRes: Int = R.drawable.ic_play
@@ -44,7 +47,7 @@ class SongPlayerView @JvmOverloads constructor(
     var onSeekBarChangedByUserListener: ((progressSeconds: Int) -> Unit)? = null
 
     init {
-        _binding = ViewSongPlayerBinding.inflate(LayoutInflater.from(context), this)
+        _binding = ViewSongPlayerBinding.inflate(LayoutInflater.from(context), this, true)
         bindViews()
         loadAttributes(attrs, defStyleAttr)
         applyAttributesToViews()
