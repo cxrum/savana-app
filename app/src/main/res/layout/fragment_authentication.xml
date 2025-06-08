@@ -60,6 +60,7 @@
     </Space>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:text="@string/sing_in"

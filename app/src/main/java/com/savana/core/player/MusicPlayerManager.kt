@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import androidx.media3.common.MediaMetadata
+import android.util.Log
 
 class MusicPlayerManager(
     context: Context
@@ -80,6 +81,8 @@ class MusicPlayerManager(
 
         })
     }
+
+    fun getPlayer(): Player? { return exoPlayer }
 
     @UnstableApi
     fun prepare(byteArray: ByteArray) {

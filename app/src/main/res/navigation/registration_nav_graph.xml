@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/avatarFragment"
-        android:name="com.savana.ui.fragments.registration.SelectAvatarFragment"
+        android:name="com.savana.ui.fragments.registration.avatar.SelectAvatarFragment"
         android:label="fragment_avatar"
         tools:layout="@layout/fragment_select_avatar" >
         <action

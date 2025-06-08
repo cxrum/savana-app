@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:layout_marginHorizontal="32dp"
+    >
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/go_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:icon="@drawable/ic_back_arrow"
+        app:iconTint="@color/colorOnBackground"
+        android:text="@string/go_back"
+        android:textColor="@color/colorOnBackground"
+        android:padding="8dp"
+        >
+    </com.google.android.material.button.MaterialButton>
+    
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_block_spacing">
+    </Space>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Title"
+        android:text="Select your avatar:"
+        >
+    </com.google.android.material.textview.MaterialTextView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing">
+    </Space>
+
+    <GridView
+        android:id="@+id/avatar_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:numColumns="3"
+        android:verticalSpacing="@dimen/inner_text_block_spacing"
+        android:horizontalSpacing="@dimen/inner_text_block_spacing"
+        android:gravity="center"
+        />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing">
+    </Space>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirm_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/confirm"
+        app:cornerRadius="18dp"
+        >
+    </com.google.android.material.button.MaterialButton>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/cancel"
+        app:cornerRadius="18dp"
+        android:backgroundTint="@color/colorSecondary"
+        android:textColor="@color/colorOnSecondary"
+        >
+    </com.google.android.material.button.MaterialButton>
+
+</LinearLayout>

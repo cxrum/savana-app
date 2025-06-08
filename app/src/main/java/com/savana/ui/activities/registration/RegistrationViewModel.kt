@@ -5,14 +5,23 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savana.R
 import com.savana.core.utils.Event
+import com.savana.domain.models.AvatarData
+import com.savana.domain.models.user.RegistrationData
+import com.savana.domain.usecases.authentication.GetAvatarsUseCase
+import com.savana.domain.usecases.authentication.RegisterUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import java.net.URL
+import kotlin.random.Random
 
 class RegistrationViewModel(
-
+    private val getAvatarsUseCase: GetAvatarsUseCase,
+    private val registerUseCase: RegisterUseCase
 ): ViewModel() {
 
     private val _state: MutableStateFlow<RegistrationState> = MutableStateFlow(RegistrationState())
@@ -26,6 +35,32 @@ class RegistrationViewModel(
 
     private val _navigateToStepEvent = MutableStateFlow<Event<Steps>?>(null)
     val navigateToStepEvent: StateFlow<Event<Steps>?> = _navigateToStepEvent.asStateFlow()
+
+    private val _avatars: MutableLiveData<List<AvatarData>> =  MutableLiveData<List<AvatarData>>(
+        emptyList())
+    val avatars: LiveData<List<AvatarData>> = _avatars
+
+    init {
+        updateAvatars()
+    }
+
+    fun register(){
+        viewModelScope.launch {
+            val email = _state.value.email!!
+            val password = _state.value.password!!
+            val username = _state.value.nickname!!
+            val avatarId = _state.value.avatarId!!
+
+            registerUseCase.invoke(
+                RegistrationData(
+                    email = email,
+                    username = username,
+                    password = password,
+                    avatarId = avatarId
+                )
+            )
+        }
+    }
 
     fun userRequestsNextStep() {
         _currentStepLiveData.value?.next()?.let { nextStep ->
@@ -50,6 +85,17 @@ class RegistrationViewModel(
 
     fun goToAuthentication() {
         _authEventLiveData.value = Event(Unit)
+    }
+
+    fun updateAvatars(){
+
+        viewModelScope.launch {
+            _avatars.value = getAvatarsUseCase()
+        }
+    }
+
+    fun getRandomAvatar(): AvatarData?{
+        return avatars.value?.get(Random.nextInt() % (avatars.value?.size ?: 1))
     }
 
     fun onEmailChanged(email: String, context: Context){
@@ -157,7 +203,8 @@ class RegistrationViewModel(
             NAME(1),
             PASSWORD(2),
             AVATAR(3),
-            WELCOME(4);
+            WELCOME(4),
+            REGISTERED(5);
 
 
             fun next(): Steps? {

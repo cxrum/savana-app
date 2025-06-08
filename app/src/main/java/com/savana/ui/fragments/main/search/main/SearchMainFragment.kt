@@ -48,6 +48,12 @@ class SearchMainFragment : Fragment() {
 
         setupUiListeners()
         setupViewModelListeners()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.setCaption("Savana")
     }
 
     private fun setupViewModelListeners(){
@@ -70,8 +76,8 @@ class SearchMainFragment : Fragment() {
         val action = SearchMainFragmentDirections
             .actionSearchMainFragmentToGapSelectorFragment(fileName, uri)
         findNavController().navigate(action)
+        searchMainViewModel.onNavigationToGapSelectorDone()
     }
-
 
     private fun setupUiListeners(){
         binding.selectFileButton.setOnClickListener {

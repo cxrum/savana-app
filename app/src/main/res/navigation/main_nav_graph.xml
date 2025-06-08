@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph" app:startDestination="@id/searchMainFragment">
 
+    <action
+        android:id="@+id/action_global_to_loadingFragment"
+        app:destination="@id/loadingFragment" />
+
     <fragment
         android:id="@+id/searchMainFragment"
         android:name="com.savana.ui.fragments.main.search.main.SearchMainFragment"
@@ -23,14 +27,14 @@
         <action
             android:id="@+id/action_loadingFragment_to_recomedationsFragment"
             app:destination="@id/recomedationsFragment"
-            app:popUpTo="@id/loadingFragment"
-            app:popUpToInclusive="true"
+            app:popUpTo="@id/searchMainFragment"
+            app:popUpToInclusive="false"
             />
         <action
-        android:id="@+id/action_loadingFragment_to_gapSelectorFragment"
-        app:destination="@id/gapSelectorFragment"
-        app:popUpTo="@id/loadingFragment"
-        app:popUpToInclusive="true"
+            android:id="@+id/action_loadingFragment_to_searchMainFragment"
+            app:destination="@id/searchMainFragment"
+            app:popUpTo="@id/searchMainFragment"
+            app:popUpToInclusive="false"
             />
     </fragment>
 
@@ -54,11 +58,16 @@
         <action
             android:id="@+id/action_gapSelectorFragment_to_loadingFragment"
             app:destination="@id/loadingFragment"
+            app:popUpTo="@id/searchMainFragment"
+            app:popUpToInclusive="false"
             />
         <action
             android:id="@+id/action_gapSelectorFragment_to_searchMainFragment"
             app:destination="@id/searchMainFragment"
+            app:popUpTo="@id/gapSelectorFragment"
+            app:popUpToInclusive="true"
             />
+
     </fragment>
 
     <fragment
@@ -67,10 +76,9 @@
         android:label="fragment_recomedations"
         tools:layout="@layout/fragment_recomedations">
         <action
-            android:id="@+id/action_recomedationsFragment_to_gapSelectorFragment"
-            app:destination="@id/gapSelectorFragment"
-            app:popUpTo="@id/action_recomedationsFragment_to_gapSelectorFragment"
-            app:popUpToInclusive="true"
-            />
+            android:id="@+id/action_recomedationsFragment_to_searchMainFragment"
+            app:destination="@id/searchMainFragment"
+            app:popUpTo="@id/searchMainFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

@@ -17,5 +17,6 @@
     <color name="colorOnSecondary">#1D1D1D</color>
 
     <color name="gray_600">#615E5C</color>
-
+    <color name="green_600">#676028</color>
+    <color name="colorAccentDark">#3A0800</color>
 </resources>

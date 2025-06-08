@@ -1,7 +1,8 @@
 package com.savana.ui.activities.main
 
+import com.savana.domain.models.HistoryEntry
+
 data class HistoryState(
-    val list: MutableList<String> = mutableListOf(),
-    val isLoading: Boolean = false,
-    val success: Boolean = false,
+    val history: List<HistoryEntry> = emptyList(),
+    val isLoading: Boolean = false
 )

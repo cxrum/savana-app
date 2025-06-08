@@ -13,6 +13,7 @@ import android.view.MotionEvent
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.withStyledAttributes
 import com.savana.R
+import com.savana.core.utils.formatTime
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -437,12 +438,6 @@ class SongGapSelectorView @JvmOverloads constructor(
     private fun Float.dpToPx(): Float = this * resources.displayMetrics.density
     private fun Float.spToPx(): Float = this * resources.displayMetrics.scaledDensity
 
-    private fun formatTime(seconds: Int): String {
-        if (seconds == 0) return "0:00"
-        val minutes = seconds / 60
-        val remainingSeconds = seconds % 60
-        return String.format("%d:%02d", minutes, remainingSeconds)
-    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val desiredHeight = (thumbRadius * 2 + paddingTop + paddingBottom + textSize*2 + textMargin.dpToPx()).toInt()

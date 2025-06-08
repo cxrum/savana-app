@@ -22,6 +22,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
             >
 
             <ImageButton
@@ -39,9 +41,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                style="@style/Base.Theme.Savana.Text.Body1"
-                android:textAlignment="center"
-                android:layout_marginEnd="42dp"
+                style="@style/Base.Theme.Savana.Text.Title"
+                android:textSize="22dp"
                 android:paddingStart="8dp"
                 />
         </LinearLayout>
@@ -54,9 +55,6 @@
             android:layout_weight="1"
             app:defaultNavHost="true"
             app:navGraph="@navigation/main_nav_graph"
-
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
             />
     </LinearLayout>
 
@@ -71,6 +69,7 @@
         android:focusable="true"
         >
         <include
+            android:id="@+id/layer_history"
             layout="@layout/layer_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

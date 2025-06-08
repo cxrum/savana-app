@@ -2,7 +2,9 @@ package com.savana.domain.models
 
 data class RecommendedTrack(
     val id: Int,
-    val trackTitle: String,
+    val title: String,
+    val albumTitle: String? = null,
+    val albumArtUrl: String? = null,
     val artistName: String,
     val totalDurationSeconds: Int,
     var isPlaying: Boolean = false,

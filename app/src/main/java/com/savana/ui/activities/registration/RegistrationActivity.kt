@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -15,15 +13,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
-import androidx.transition.Visibility
 import com.savana.R
 import com.savana.databinding.ActivityRegistrationBinding
 import com.savana.ui.activities.authentication.AuthenticationActivity
+import com.savana.ui.activities.main.MainActivity
 import com.savana.ui.fragments.registration.EmailFragmentDirections
 import com.savana.ui.fragments.registration.NameFragmentDirections
 import com.savana.ui.fragments.registration.PasswordFragmentDirections
-import com.savana.ui.fragments.registration.SelectAvatarFragmentDirections
-import kotlinx.coroutines.flow.collect
+import com.savana.ui.fragments.registration.avatar.SelectAvatarFragmentDirections
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.savana.ui.activities.registration.RegistrationViewModel.Companion.Steps as Steps
@@ -88,6 +85,11 @@ class RegistrationActivity : AppCompatActivity(){
                             if (currentActualStep!=null){
                                 val action = getNavigationAction(currentActualStep, stepToNavigateTo)
 
+                                if (stepToNavigateTo == Steps.REGISTERED) {
+                                    goToMain()
+                                    return@let
+                                }
+
                                 if (action != null) {
                                     navController.navigate(action)
                                     registrationViewModel.stepChanged(stepToNavigateTo)
@@ -134,8 +136,10 @@ class RegistrationActivity : AppCompatActivity(){
                 else -> null
             }
             Steps.WELCOME -> when (targetStep) {
+                Steps.REGISTERED -> null
                 else -> null
             }
+            Steps.REGISTERED -> null
         }
     }
 
@@ -149,6 +153,13 @@ class RegistrationActivity : AppCompatActivity(){
 
     private fun goToAuthentication(){
         val intent = Intent(this, AuthenticationActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
+    private fun goToMain(){
+        val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()

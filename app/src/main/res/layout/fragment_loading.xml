@@ -22,9 +22,18 @@
         android:layout_width="200dp"
         android:layout_height="94dp"
         app:maxAmplitude="94"
-        app:minAmplitude="10"
+        app:minAmplitude="20"
         app:waveColor="@color/colorAccent"
         >
     </com.savana.ui.view.sinus_wave.SineWaveLoadingView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Body2"
+        android:text="You can leave this screen"
+        android:textColor="@color/colorOnBackground"
+        >
+    </com.google.android.material.textview.MaterialTextView>
 
 </LinearLayout>

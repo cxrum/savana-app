@@ -28,7 +28,7 @@ class LoadingFragment : Fragment() {
     ): View? {
 
         _binding = FragmentLoadingBinding.inflate(inflater, container, false)
-
+        mainViewModel.setCaption("")
         return binding.root
     }
 

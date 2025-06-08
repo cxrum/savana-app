@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.savana.R
 import com.savana.core.extension.getBitMap
 import com.savana.databinding.FragmentGapSelectorBinding
+import com.savana.domain.models.SelectedTrackGap
 import com.savana.ui.activities.main.MainViewModel
 import com.savana.ui.player.AudioPlayerViewModel
 import com.savana.ui.player.AudioPlayerViewModel.Companion.MIN_DURATION_SECONDS
@@ -54,6 +55,7 @@ class GapSelectorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentGapSelectorBinding.inflate(inflater, container, false)
+        mainViewModel.setCaption("Gap selection")
         return binding.root
     }
 
@@ -66,6 +68,7 @@ class GapSelectorFragment : Fragment() {
         val fileName = args.fileName
 
         if (audioUri != null && fileName != null){
+            gapSelectionViewModel.state.value.fileUri = audioUri
             gapSelectionViewModel.loadAudioFile(audioUri, requireActivity().contentResolver, requireContext())
             gapSelectionViewModel.setFilename(fileName)
         }
@@ -79,6 +82,7 @@ class GapSelectorFragment : Fragment() {
         val cover = gapSelectionViewModel.state.value.cover
         val currentSec = audioPlayerViewModel.currentPositionSec.value
         val gapStartSec = gapSelectionViewModel.state.value.startSec
+        val audioUri = gapSelectionViewModel.state.value.fileUri
 
         audioPlayerViewModel.seekToSec(currentSec)
         gapSelectionViewModel.setCover(cover)
@@ -101,7 +105,12 @@ class GapSelectorFragment : Fragment() {
         binding.confirmButtonAction.setOnClickListener {
             val range = binding.songGapSelector.getCurrentRange()
             Toast.makeText(requireContext(), "Range selected: ${range.first}s - ${range.second}s", Toast.LENGTH_LONG).show()
-            mainViewModel.startMusicAnalyzingProcess()
+            mainViewModel.startMusicAnalyzingProcess(
+                SelectedTrackGap(
+                    gapStart = range.first * 1000L,
+                    gapEnd = range.second * 1000L,
+                )
+            )
         }
 
         binding.songGapSelector.onRangeChanged { startSec, endSec ->

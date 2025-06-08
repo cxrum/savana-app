@@ -1,6 +1,7 @@
 package com.savana.ui.fragments.main.search.selection
 
 import android.graphics.Bitmap
+import android.net.Uri
 
 data class GapSelectionState(
     val isLoading: Boolean = false,
@@ -10,5 +11,6 @@ data class GapSelectionState(
     val errorMessage: String? = null,
     val startSec: Int? = null,
     val endSec: Int? = null,
-    val cover: Bitmap? = null
+    val cover: Bitmap? = null,
+    var fileUri: Uri? = null
 )

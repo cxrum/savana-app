@@ -62,6 +62,7 @@
             android:layout_height="wrap_content"
             >
             <com.savana.ui.view.welcome_view.AnimatedBlobView
+                android:id="@+id/blob"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:radiusMax="180dp"

@@ -1,11 +1,12 @@
 package com.savana.domain.usecases.authentication
 
+import com.savana.domain.models.user.LoginData
 import com.savana.domain.repository.authentication.AuthenticationRepository
 
 class LoginUseCase(
     private val authenticationRepository: AuthenticationRepository
 ) {
-    suspend operator fun invoke(){
+    suspend operator fun invoke(data: LoginData){
 
     }
 }

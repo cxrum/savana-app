@@ -58,11 +58,11 @@ class SongPlayerView @JvmOverloads constructor(
 
 
     private fun bindViews() {
-        songNameTextView = binding.songName
-        currentTimeTextView = binding.currentTime
-        totalDurationTextView = binding.totalDurationTime
-        songSeekBar = binding.seekBar
-        playPauseButton = binding.toglePlay
+//        songNameTextView = binding.songName
+//        currentTimeTextView = binding.currentTime
+//        totalDurationTextView = binding.totalDurationTime
+//        songSeekBar = binding.seekBar
+//        playPauseButton = binding.toglePlay
     }
 
     private fun loadAttributes(attrs: AttributeSet?, defStyleAttr: Int) {

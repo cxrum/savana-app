@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import com.savana.R
 import com.savana.core.exeption.SongToShortException
@@ -51,6 +52,10 @@ class AudioPlayerViewModel(application: Application) : ViewModel() {
                 }
             }
         }
+    }
+
+    fun getPlayer(): Player? {
+        return musicPlayerManager.getPlayer()
     }
 
     fun prepareAudio(audioBytes: ByteArray) {
@@ -106,6 +111,7 @@ class AudioPlayerViewModel(application: Application) : ViewModel() {
         super.onCleared()
         releasePlayer()
     }
+
 
     companion object{
         const val MIN_DURATION_SECONDS = 30

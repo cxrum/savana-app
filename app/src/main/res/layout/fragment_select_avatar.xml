@@ -19,7 +19,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/blocked_item_spacing">
     </Space>
-
+    
+    <ImageView
+        android:id="@+id/avatar_select"
+        android:layout_width="138dp"
+        android:layout_height="138dp"
+        android:background="@color/colorSecondary"
+        android:layout_gravity="center"
+        >
+    </ImageView>
+    
     <Space
         android:layout_width="match_parent"
         android:layout_height="@dimen/block_spacing">

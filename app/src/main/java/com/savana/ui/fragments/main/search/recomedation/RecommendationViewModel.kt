@@ -1,104 +1,73 @@
 package com.savana.ui.fragments.main.search.recomedation
 
 import android.app.Application
-import android.content.ContentUris
-import android.net.Uri
-import android.provider.MediaStore
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.savana.domain.models.RadarChartData
 import com.savana.domain.models.RecommendedTrack
-import com.savana.ui.fragments.main.search.main.RadarChartData
-import com.savana.ui.fragments.main.search.main.charDataPlaceholder
-import kotlinx.coroutines.Dispatchers
+import com.savana.domain.models.charDataPlaceholder
+import com.savana.domain.usecases.recommendation.GetRecommendationsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileInputStream
+
+data class TrackRecommendationsState(
+    val tracks: List<RecommendedTrack> = emptyList()
+)
 
 class RecommendationViewModel(
-    var application: Application
+    var application: Application,
+    private val getRecommendations: GetRecommendationsUseCase
 ): ViewModel() {
-
-    private val _tracks = MutableStateFlow(mapOf<Int, RecommendedTrack>())
-    val tracks: StateFlow<Map<Int, RecommendedTrack>> = _tracks.asStateFlow()
-
-    private val _state = MutableStateFlow(RecommendationState())
-    val state: StateFlow<RecommendationState> = _state.asStateFlow()
 
     private val _charData = MutableStateFlow(RadarChartData())
     val charData: StateFlow<RadarChartData> = _charData.asStateFlow()
 
+    private val _recommendationData = MutableStateFlow(TrackRecommendationsState())
+    val recommendationData: StateFlow<TrackRecommendationsState> = _recommendationData.asStateFlow()
+
+    private val _state = MutableStateFlow(RecommendationState())
+    val state: StateFlow<RecommendationState> = _state.asStateFlow()
+
     init {
-        setChartData(charDataPlaceholder)
-
+        updateRecommendation()
+        songData()
     }
 
-    fun setUpList(){
-        _tracks.value = mapOf(
-            Pair(1, RecommendedTrack(
-                id = 1,
-                trackTitle = "AbobaSong 1",
-                artistName = "Boba",
-                totalDurationSeconds = 101,
-            )),Pair(2, RecommendedTrack(
-                id = 2,
-                trackTitle = "AbobaSong 2",
-                artistName = "Boba",
-                totalDurationSeconds = 101,
-            )),Pair(5, RecommendedTrack(
-                id = 5,
-                trackTitle = "AbobaSong 5",
-                artistName = "Boba",
-                totalDurationSeconds = 101,
-            )),Pair(3, RecommendedTrack(
-                id = 3,
-                trackTitle = "AbobaSong 3",
-                artistName = "Boba",
-                totalDurationSeconds = 101,
-            )),Pair(12, RecommendedTrack(
-                id = 12,
-                trackTitle = "AbobaSong 12",
-                artistName = "Boba",
-                totalDurationSeconds = 101,
-            )),Pair(6, RecommendedTrack(
-                id = 66,
-                trackTitle = "AbobaSong 66",
-                artistName = "Boba",
-                totalDurationSeconds = 101,
-            )),
+    private fun songData(){
+        _state.value = state.value.copy(
+            trackTitle = "Example fetched song title title title title title title title title",
+            trackAuthor = "Example fetched song author"
         )
     }
 
-    fun setChartData(data: RadarChartData){
-        _charData.value = data
-    }
-
-    fun setTrackPlayingState(trackId: Int, state: Boolean){
-        changeCurrentTrack(trackId)
-        _tracks.value[trackId]?.isPlaying = false
-        setPlayingState(state)
-    }
-
-    fun setCurrentSecond(trackId: Int, second: Int){
-        _tracks.value[trackId]?.currentSecond = second
-    }
-
-    private fun setPlayingState(state: Boolean){
-        _state.value = _state.value.copy(
-            isPlaying = state
+    fun analyticsScreen(){
+        _state.value = state.value.copy(
+            screen = ScreenState.Analytics
         )
     }
 
-    private fun changeCurrentTrack(id: Int){
-        val currentTrackId = _state.value.currentPlayingTrackId
-        _tracks.value[currentTrackId]?.currentSecond = 0
-        _state.value = _state.value.copy(
-            currentPlayingTrackId = id
+    fun recommendationsScreen(){
+        _state.value = state.value.copy(
+            screen = ScreenState.Recommendations
         )
+    }
+
+    fun updateRecommendation(){
+        viewModelScope.launch {
+            val recommendation = getRecommendations.invoke()
+
+            _charData.value = recommendation.chartData
+            _recommendationData.value = TrackRecommendationsState(
+                tracks = recommendation.recommendedTracks
+            )
+        }
+
+    }
+
+    enum class ScreenState{
+        Recommendations,
+        Analytics,
     }
 }

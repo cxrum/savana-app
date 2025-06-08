@@ -76,7 +76,9 @@ class EmailFragment : Fragment() {
             if (registrationViewModel.state.value.errorMessage == null
                 && registrationViewModel.state.value.email != null){
                 registrationViewModel.userRequestsNextStep()
-            } else if (registrationViewModel.state.value.email != null && registrationViewModel.state.value.email!!.isBlank()) {
+            }
+
+            if(binding.emailInput.text?.isEmpty() == true){
                 registrationViewModel.setError(getString(R.string.email_cannot_be_empty))
             }
         }
@@ -87,14 +89,10 @@ class EmailFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 launch {
                     registrationViewModel.state.collect{ state ->
-                        if(interactedWithEditText){
-                            if (state.errorMessage != null){
-                                setEmailError(state.errorMessage)
-                            }else{
-                                setEmailCorrect()
-                            }
+                        if (state.errorMessage != null){
+                            setEmailError(state.errorMessage)
                         }else{
-                            setEmailError(null)
+                            setEmailCorrect()
                         }
                     }
                 }

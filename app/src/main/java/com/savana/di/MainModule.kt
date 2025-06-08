@@ -3,8 +3,11 @@ package com.savana.di
 import android.annotation.SuppressLint
 import com.savana.domain.repository.recommendation.RecommendationRepository
 import com.savana.domain.repository.recommendation.RecommendationRepositoryImpl
+import com.savana.domain.repository.user.UserRepositories
+import com.savana.domain.repository.user.UserRepositoriesImpl
 import com.savana.ui.activities.main.MainViewModel
 import com.savana.ui.fragments.main.search.main.SearchMainViewModel
+import com.savana.ui.fragments.main.search.recomedation.MusicPlayerViewModel
 import com.savana.ui.fragments.main.search.recomedation.RecommendationViewModel
 import com.savana.ui.fragments.main.search.selection.GapSelectionViewModel
 import com.savana.ui.player.AudioPlayerViewModel
@@ -19,6 +22,10 @@ val appMainModule = module {
         RecommendationRepositoryImpl()
     }
 
+    single<UserRepositories> {
+        UserRepositoriesImpl()
+    }
+
     viewModel {
         AudioPlayerViewModel(
             get()
@@ -27,6 +34,11 @@ val appMainModule = module {
 
     viewModel {
         RecommendationViewModel(
+            get()
+        )
+    }
+    viewModel {
+        MusicPlayerViewModel(
             get()
         )
     }

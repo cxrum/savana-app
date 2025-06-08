@@ -39,5 +39,9 @@ class AuthenticationFragment : Fragment() {
         binding.registration.setOnClickListener {
             authenticationViewModel.goToRegistration()
         }
+
+        binding.login.setOnClickListener {
+            authenticationViewModel.login()
+        }
     }
 }
