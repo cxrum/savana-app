@@ -22,7 +22,6 @@ import com.savana.domain.models.HistoryEntry
 import com.savana.ui.decorators.SpacingItemDecoration
 import com.savana.ui.fragments.main.search.recomedation.RecommendationViewModel
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -59,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(binding.navHostFragmentContainer.id) as NavHostFragment
         navController = navHostFragment.navController
+
+        mainViewModel.historyForceUpdate()
 
         setupHistoryAdapter()
         setupListeners()

@@ -24,16 +24,15 @@ class MainViewModel(
     private val _mainState = MutableStateFlow<MainState>(MainState())
     val mainState: StateFlow<MainState> = _mainState.asStateFlow()
 
-    private val _history = MutableStateFlow<HistoryState>(HistoryState())
+    private val _history = MutableStateFlow(HistoryState())
     val history = _history.asStateFlow()
 
     fun setCaption(caption: String){
         _mainState.value = _mainState.value.copy(caption = caption)
     }
 
-    fun historyUpdate(){
+    fun historyForceUpdate(){
         viewModelScope.launch {
-
             _history.value = _history.value.copy(
                 isLoading = true
             )
@@ -42,6 +41,17 @@ class MainViewModel(
                 history = historyUseCase.invoke(),
                 isLoading = false
             )
+        }
+    }
+
+    fun historyUpdate(){
+        viewModelScope.launch {
+            val fetchedHistory = historyUseCase.invoke()
+            if (history.value.history != fetchedHistory){
+                _history.value = _history.value .copy(
+                    history = fetchedHistory
+                )
+            }
         }
     }
 
