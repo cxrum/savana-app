@@ -5,6 +5,9 @@ import com.savana.domain.repository.recommendation.RecommendationRepository
 import com.savana.domain.repository.recommendation.RecommendationRepositoryImpl
 import com.savana.domain.repository.user.UserRepositories
 import com.savana.domain.repository.user.UserRepositoriesImpl
+import com.savana.domain.usecases.history.GetHistoryUseCase
+import com.savana.domain.usecases.recommendation.GetRecommendationsUseCase
+import com.savana.domain.usecases.recommendation.SendTrackToAnalysisUseCase
 import com.savana.ui.activities.main.MainViewModel
 import com.savana.ui.fragments.main.search.main.SearchMainViewModel
 import com.savana.ui.fragments.main.search.recomedation.MusicPlayerViewModel
@@ -17,6 +20,18 @@ import org.koin.dsl.module
 
 @SuppressLint("UnsafeOptInUsageError")
 val appMainModule = module {
+
+    single {
+        GetHistoryUseCase()
+    }
+
+    single {
+        GetRecommendationsUseCase()
+    }
+
+    single {
+        SendTrackToAnalysisUseCase()
+    }
 
     single<RecommendationRepository> {
         RecommendationRepositoryImpl()
@@ -34,7 +49,6 @@ val appMainModule = module {
 
     viewModel {
         RecommendationViewModel(
-            get()
         )
     }
     viewModel {
@@ -45,6 +59,8 @@ val appMainModule = module {
 
     viewModel {
         MainViewModel(
+            get(),
+            get(),
             get()
         )
     }

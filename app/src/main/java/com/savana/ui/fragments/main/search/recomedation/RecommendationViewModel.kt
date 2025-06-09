@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.savana.domain.models.RadarChartData
+import com.savana.domain.models.RecommendationData
 import com.savana.domain.models.RecommendedTrack
 import com.savana.domain.models.charDataPlaceholder
 import com.savana.domain.usecases.recommendation.GetRecommendationsUseCase
@@ -16,10 +17,7 @@ data class TrackRecommendationsState(
     val tracks: List<RecommendedTrack> = emptyList()
 )
 
-class RecommendationViewModel(
-    var application: Application,
-    private val getRecommendations: GetRecommendationsUseCase
-): ViewModel() {
+class RecommendationViewModel: ViewModel() {
 
     private val _charData = MutableStateFlow(RadarChartData())
     val charData: StateFlow<RadarChartData> = _charData.asStateFlow()
@@ -30,8 +28,14 @@ class RecommendationViewModel(
     private val _state = MutableStateFlow(RecommendationState())
     val state: StateFlow<RecommendationState> = _state.asStateFlow()
 
-    init {
-        updateRecommendation()
+    fun processRecommendationData(data: RecommendationData) {
+        _charData.value = data.chartData
+        _recommendationData.value = TrackRecommendationsState(
+            tracks = data.recommendedTracks
+        )
+        _state.value = state.value.copy(
+            isLoading = false
+        )
         songData()
     }
 
@@ -52,18 +56,6 @@ class RecommendationViewModel(
         _state.value = state.value.copy(
             screen = ScreenState.Recommendations
         )
-    }
-
-    fun updateRecommendation(){
-        viewModelScope.launch {
-            val recommendation = getRecommendations.invoke()
-
-            _charData.value = recommendation.chartData
-            _recommendationData.value = TrackRecommendationsState(
-                tracks = recommendation.recommendedTracks
-            )
-        }
-
     }
 
     enum class ScreenState{

@@ -59,13 +59,20 @@ class MusicPlayerViewModel(
                 }
 
                 override fun onPlaybackStateChanged(playbackState: Int) {
-                    if (playbackState == Player.STATE_READY) {
-                        _uiState.update {
-                            it.copy(totalDurationMillis = exoPlayer?.duration ?: 0L)
+                    when (playbackState) {
+                        Player.STATE_BUFFERING -> {
+                            _uiState.update { it.copy(isPreparingTrack = true) }
                         }
-                    }
-                    if (playbackState == Player.STATE_ENDED) {
-                        playNextTrack()
+                        Player.STATE_READY -> {
+                            _uiState.update { it.copy(isPreparingTrack = false, totalDurationMillis = exoPlayer?.duration ?: 0L) }
+                        }
+                        Player.STATE_ENDED -> {
+                            _uiState.update { it.copy(isPreparingTrack = false) }
+                            playNextTrack()
+                        }
+                        Player.STATE_IDLE -> {
+                            _uiState.update { it.copy(isPreparingTrack = false) }
+                        }
                     }
                 }
             })

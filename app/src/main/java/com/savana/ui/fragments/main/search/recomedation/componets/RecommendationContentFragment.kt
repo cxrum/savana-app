@@ -14,17 +14,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.savana.R
 import com.savana.databinding.FragmentRecommendationsContentBinding
-import com.savana.domain.models.RecommendedTrack
 import com.savana.ui.fragments.main.search.recomedation.MusicPlayerViewModel
 import com.savana.ui.fragments.main.search.recomedation.RecommendationViewModel
 import com.savana.ui.theme.SavanaTheme
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -37,13 +31,16 @@ fun MusicPlayerScreenForScrollView(
     val uiState by viewModel.uiState.collectAsState()
     val tracksData by recommendationViewModel.recommendationData.collectAsState()
 
-    LaunchedEffect(Unit) {
-        viewModel.loadTracks(tracksData.tracks)
+    LaunchedEffect(tracksData.tracks) {
+        if (tracksData.tracks.isNotEmpty()) {
+            viewModel.loadTracks(tracksData.tracks)
+        }
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
         TrackListView(
             tracks = uiState.tracks,
+
             currentPlayingTrack = uiState.currentPlayingTrack,
             isPlaying = uiState.isPlaying,
             onTrackClick = { track -> viewModel.onTrackSelected(track) },
@@ -74,33 +71,7 @@ class RecommendationContentFragment : Fragment(R.layout.fragment_recommendations
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupObservers()
         setupSongPlayList()
-    }
-
-    private fun setupObservers(){
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                recommendationViewModel.state.collect{ state ->
-                    if (state.isLoading){
-                        showLoading()
-                    }else{
-                        showContent()
-                    }
-                }
-            }
-        }
-
-    }
-
-    fun showLoading(){
-        binding.musicPlayerComposeView.visibility = View.GONE
-        binding.loading.root.visibility = View.VISIBLE
-    }
-
-    fun showContent(){
-        binding.musicPlayerComposeView.visibility = View.VISIBLE
-        binding.loading.root.visibility = View.GONE
     }
 
     private fun setupSongPlayList() {

@@ -32,7 +32,6 @@ class MainViewModel(
     }
 
     fun historyUpdate(){
-
         viewModelScope.launch {
 
             _history.value = _history.value.copy(

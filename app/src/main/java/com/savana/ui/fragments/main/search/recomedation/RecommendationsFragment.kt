@@ -2,6 +2,7 @@ package com.savana.ui.fragments.main.search.recomedation
 
 import ScreenSlidePagerAdapter
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,13 +17,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import com.savana.R
+import com.savana.domain.models.RecommendationData
+import com.savana.ui.activities.main.OperationState
 import com.savana.ui.fragments.main.search.recomedation.RecommendationViewModel.ScreenState
 import kotlinx.coroutines.launch
 
 @UnstableApi
 class RecommendationsFragment : Fragment() {
 
-    private val recommendationViewModel: RecommendationViewModel  by viewModel()
+    private val recommendationViewModel: RecommendationViewModel  by activityViewModel()
     private val mainViewModel: MainViewModel  by activityViewModel()
 
     private var _binding: FragmentRecomedationsBinding? = null
@@ -36,28 +39,25 @@ class RecommendationsFragment : Fragment() {
         _binding = FragmentRecomedationsBinding.inflate(inflater, container, false)
         mainViewModel.setCaption("Savana Recommendation")
 
-        setListeners()
         setObservers()
+        setListeners()
 
         return binding.root
     }
 
-    private fun setObservers(){
+    private fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.recommendationResult.collect { state ->
 
-                recommendationViewModel.state.collect{ state ->
+                    Log.d("State", state.toString())
 
-                    if (state.trackAuthor != null){
-                        binding.author.text = state.trackAuthor
+                    if (state is OperationState.Success<RecommendationData>) {
+                        val recommendationData = state.data
+                        recommendationViewModel.processRecommendationData(recommendationData)
+                        mainViewModel.operationHandled()
                     }
-
-                    if (state.trackTitle != null){
-                        binding.trackTitle.text = state.trackTitle
-                    }
-
                 }
-
             }
         }
     }

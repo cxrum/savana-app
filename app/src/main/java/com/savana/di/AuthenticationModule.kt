@@ -1,6 +1,9 @@
 package com.savana.di
 
+import com.savana.domain.repository.authentication.AuthenticationRepository
+import com.savana.domain.repository.authentication.AuthenticationRepositoryImpl
 import com.savana.domain.usecases.authentication.CheckAuthenticationUseCase
+import com.savana.domain.usecases.authentication.LoginUseCase
 import com.savana.ui.activities.authentication.AuthenticationViewModel
 import com.savana.ui.splash.StartupViewModel
 import org.koin.core.module.dsl.viewModel
@@ -8,8 +11,20 @@ import org.koin.dsl.module
 
 val authenticationModule = module {
 
+    single<AuthenticationRepository>{
+        AuthenticationRepositoryImpl()
+    }
+
+    single {
+        LoginUseCase(
+            get()
+        )
+    }
+
     viewModel {
-        AuthenticationViewModel()
+        AuthenticationViewModel(
+            get()
+        )
     }
 
     viewModel {

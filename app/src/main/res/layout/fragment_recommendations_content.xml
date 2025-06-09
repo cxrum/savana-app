@@ -4,15 +4,6 @@
     android:layout_height="match_parent"
     >
 
-    <include
-        android:id="@+id/loading"
-        layout="@layout/view_loading"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        >
-    </include>
-
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/music_player_compose_view"
         android:layout_width="match_parent"

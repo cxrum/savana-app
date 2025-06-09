@@ -8,7 +8,7 @@ class SendTrackToAnalysisUseCase {
 
     suspend operator fun invoke(gap: SelectedTrackGap): RecommendationData{
         delay(1000)
-        return RecommendationData("Test")
+        return GetRecommendationsUseCase.placeholder
     }
 
 }

@@ -20,7 +20,9 @@ import com.savana.databinding.ActivityMainBinding
 import com.savana.ui.activities.main.history.HistoryAdapter
 import com.savana.domain.models.HistoryEntry
 import com.savana.ui.decorators.SpacingItemDecoration
+import com.savana.ui.fragments.main.search.recomedation.RecommendationViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private val mainViewModel: MainViewModel by viewModel()
+    private val recommendationViewModel: RecommendationViewModel by viewModel()
+
     private lateinit var historyAdapter: HistoryAdapter
 
     @OptIn(UnstableApi::class)
@@ -73,7 +77,6 @@ class MainActivity : AppCompatActivity() {
                             is OperationState.Loading -> handleAnalyzeLoading()
                             is OperationState.Success<*> -> handleMusicAnalyzeSuccess()
                         }
-                        mainViewModel.operationHandled()
                     }
                 }
 
