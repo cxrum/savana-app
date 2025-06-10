@@ -2,9 +2,9 @@ package com.savana.di
 
 import android.annotation.SuppressLint
 import com.savana.domain.repository.recommendation.RecommendationRepository
-import com.savana.domain.repository.recommendation.RecommendationRepositoryImpl
-import com.savana.domain.repository.user.UserRepositories
-import com.savana.domain.repository.user.UserRepositoriesImpl
+import com.savana.data.repository.recommendation.RecommendationRepositoryImpl
+import com.savana.domain.repository.user.UserRepository
+import com.savana.data.repository.user.UserRepositoryImpl
 import com.savana.domain.usecases.history.GetHistoryUseCase
 import com.savana.domain.usecases.recommendation.GetRecommendationsUseCase
 import com.savana.domain.usecases.recommendation.SendTrackToAnalysisUseCase
@@ -14,7 +14,6 @@ import com.savana.ui.fragments.main.search.recomedation.MusicPlayerViewModel
 import com.savana.ui.fragments.main.search.recomedation.RecommendationViewModel
 import com.savana.ui.fragments.main.search.selection.GapSelectionViewModel
 import com.savana.ui.player.AudioPlayerViewModel
-import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -37,8 +36,10 @@ val appMainModule = module {
         RecommendationRepositoryImpl()
     }
 
-    single<UserRepositories> {
-        UserRepositoriesImpl()
+    single<UserRepository> {
+        UserRepositoryImpl(
+            get()
+        )
     }
 
     viewModel {

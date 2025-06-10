@@ -21,7 +21,7 @@ android {
         }
     }
 
-    val apiUrl = localProps.getProperty("network.api.url")
+    val API_URL = localProps.getProperty("network.api.url")
 
     defaultConfig {
         applicationId = "com.savana"
@@ -32,7 +32,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "apiUrl", apiUrl)
+        buildConfigField("String", "API_URL", API_URL)
 
     }
 

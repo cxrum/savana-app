@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.net.URL
 import kotlin.random.Random
 
 class RegistrationViewModel(
@@ -54,7 +53,7 @@ class RegistrationViewModel(
             registerUseCase.invoke(
                 RegistrationData(
                     email = email,
-                    username = username,
+                    nickname = username,
                     password = password,
                     avatarId = avatarId
                 )

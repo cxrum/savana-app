@@ -1,11 +1,12 @@
 package com.savana.data.local.user
 
 class UserDaoImpl: UserDao {
-    override fun getToken(): String? {
+    override fun getId(): Int? {
         TODO("Not yet implemented")
     }
 
-    override fun setToken(token: String) {
+    override fun setId(id: Int) {
         TODO("Not yet implemented")
     }
+
 }

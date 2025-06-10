@@ -8,10 +8,10 @@ data class RadarChartData (
 
 val charDataPlaceholder = RadarChartData(
     chartData = listOf(
-        RadarEntry(45f, "Танцевальность"),
-        RadarEntry(88f, "Энергия"),
-        RadarEntry(15f, "Акустика"),
-        RadarEntry(76f, "Позитив"),
-        RadarEntry(92f, "Популярность")
+        RadarEntry(45f, "A"),
+        RadarEntry(88f, "B"),
+        RadarEntry(15f, "C"),
+        RadarEntry(76f, "D"),
+        RadarEntry(92f, "E")
     )
 )

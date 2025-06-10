@@ -1,7 +1,6 @@
 package com.savana
 
 import android.app.Application
-import com.savana.di.apiModule
 import com.savana.di.appMainModule
 import com.savana.di.authenticationModule
 import com.savana.di.localStorageModule
@@ -19,7 +18,6 @@ class Application: Application() {
             androidLogger(level = Level.DEBUG)
             androidContext(this@Application)
             modules(
-                apiModule,
                 localStorageModule,
                 authenticationModule,
                 registrationModule,

@@ -2,8 +2,8 @@ package com.savana.data.local.user
 
 interface UserDao {
 
-    fun getToken(): String?
-    fun setToken(token: String)
+    fun getId(): Int?
+    fun setId(id: Int)
 
 
 }
