@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Pause
-import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
@@ -33,12 +31,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.savana.R
-import com.savana.domain.models.RecommendedTrack
+import com.savana.domain.models.TrackInfo
 import okhttp3.internal.concurrent.formatDuration
 
 @Composable
 fun PlayerControlsView(
-    currentTrack: RecommendedTrack?,
+    currentTrackInfo: TrackInfo?,
     isPlaying: Boolean,
     currentPositionMillis: Long,
     totalDurationMillis: Long,
@@ -48,7 +46,7 @@ fun PlayerControlsView(
     onSeek: (Float) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (currentTrack == null) {
+    if (currentTrackInfo == null) {
         Box(modifier = modifier
             .fillMaxWidth()
             .height(150.dp)
@@ -69,8 +67,8 @@ fun PlayerControlsView(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
-                model = currentTrack.albumArtUrl,
-                contentDescription = "Album Art for ${currentTrack.title}",
+                model = currentTrackInfo.albumArtUrl,
+                contentDescription = "Album Art for ${currentTrackInfo.title}",
                 modifier = Modifier
                     .size(120.dp)
                     .clip(MaterialTheme.shapes.medium),
@@ -78,12 +76,12 @@ fun PlayerControlsView(
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = currentTrack.title,
+                text = currentTrackInfo.title,
                 style = MaterialTheme.typography.titleLarge,
                 maxLines = 1
             )
             Text(
-                text = currentTrack.artistName,
+                text = currentTrackInfo.artistName,
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1
             )

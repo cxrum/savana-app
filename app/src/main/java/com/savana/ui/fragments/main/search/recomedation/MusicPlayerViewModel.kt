@@ -11,7 +11,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import android.content.Context
-import com.savana.domain.models.RecommendedTrack
+import com.savana.domain.models.TrackInfo
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 
@@ -47,10 +47,10 @@ class MusicPlayerViewModel(
                 override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                     super.onMediaItemTransition(mediaItem, reason)
                     mediaItem?.mediaId?.let { trackId ->
-                        val newTrack = _uiState.value.tracks.find { it.id == trackId.toInt() }
+                        val newTrack = _uiState.value.trackInfos.find { it.id == trackId.toInt() }
                         _uiState.update {
                             it.copy(
-                                currentPlayingTrack = newTrack,
+                                currentPlayingTrackInfo = newTrack,
                                 totalDurationMillis = (newTrack?.totalDurationSeconds!! * 1000L),
                                 currentPositionMillis = 0L
                             )
@@ -79,34 +79,34 @@ class MusicPlayerViewModel(
         }
     }
 
-    fun loadTracks(tracks: List<RecommendedTrack>) {
-        _uiState.update { it.copy(tracks = tracks) }
+    fun loadTracks(trackInfos: List<TrackInfo>) {
+        _uiState.update { it.copy(trackInfos = trackInfos) }
     }
 
-    fun onTrackSelected(track: RecommendedTrack) {
+    fun onTrackSelected(trackInfo: TrackInfo) {
         val currentPlayer = exoPlayer ?: return
 
-        if (_uiState.value.currentPlayingTrack?.id == track.id && _uiState.value.isPlaying) {
+        if (_uiState.value.currentPlayingTrackInfo?.id == trackInfo.id && _uiState.value.isPlaying) {
             currentPlayer.pause()
-        } else if (_uiState.value.currentPlayingTrack?.id == track.id && !_uiState.value.isPlaying) {
+        } else if (_uiState.value.currentPlayingTrackInfo?.id == trackInfo.id && !_uiState.value.isPlaying) {
             currentPlayer.play()
         } else {
-            _uiState.update { it.copy(currentPlayingTrack = track) }
-            prepareAndPlayTrack(track)
+            _uiState.update { it.copy(currentPlayingTrackInfo = trackInfo) }
+            prepareAndPlayTrack(trackInfo)
         }
     }
 
-    private fun prepareAndPlayTrack(track: RecommendedTrack) {
+    private fun prepareAndPlayTrack(trackInfo: TrackInfo) {
         val currentPlayer = exoPlayer ?: return
         val mediaItem = MediaItem.Builder()
-            .setUri(track.streamUrl)
-            .setMediaId(track.id.toString())
+            .setUri(trackInfo.streamUrl)
+            .setMediaId(trackInfo.id.toString())
             .build()
 
         currentPlayer.setMediaItem(mediaItem)
         currentPlayer.prepare()
         currentPlayer.play()
-        _uiState.update { it.copy(currentPlayingTrack = track, totalDurationMillis = track.totalDurationSeconds * 1000L, currentPositionMillis = 0L) }
+        _uiState.update { it.copy(currentPlayingTrackInfo = trackInfo, totalDurationMillis = trackInfo.totalDurationSeconds * 1000L, currentPositionMillis = 0L) }
     }
 
 
@@ -115,8 +115,8 @@ class MusicPlayerViewModel(
         if (currentPlayer.isPlaying) {
             currentPlayer.pause()
         } else {
-            if (currentPlayer.currentMediaItem == null && _uiState.value.tracks.isNotEmpty()) {
-                _uiState.value.tracks.firstOrNull()?.let { onTrackSelected(it) }
+            if (currentPlayer.currentMediaItem == null && _uiState.value.trackInfos.isNotEmpty()) {
+                _uiState.value.trackInfos.firstOrNull()?.let { onTrackSelected(it) }
             } else {
                 currentPlayer.play()
             }
@@ -125,8 +125,8 @@ class MusicPlayerViewModel(
 
     fun playNextTrack() {
         val currentPlayer = exoPlayer ?: return
-        val tracks = _uiState.value.tracks
-        val currentTrack = _uiState.value.currentPlayingTrack
+        val tracks = _uiState.value.trackInfos
+        val currentTrack = _uiState.value.currentPlayingTrackInfo
         if (tracks.isEmpty()) return
 
         val currentIndex = currentTrack?.let { tracks.indexOf(it) } ?: -1
@@ -139,8 +139,8 @@ class MusicPlayerViewModel(
 
     fun playPreviousTrack() {
         val currentPlayer = exoPlayer ?: return
-        val tracks = _uiState.value.tracks
-        val currentTrack = _uiState.value.currentPlayingTrack
+        val tracks = _uiState.value.trackInfos
+        val currentTrack = _uiState.value.currentPlayingTrackInfo
         if (tracks.isEmpty()) return
 
         val currentIndex = currentTrack?.let { tracks.indexOf(it) } ?: -1

@@ -6,3 +6,7 @@ data class UserResponse(
     val avatar: String? = null,
     val nickname: String? = null
 )
+
+data class UserData(
+    val user: UserResponse
+)

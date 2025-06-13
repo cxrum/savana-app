@@ -1,7 +1,7 @@
 package com.savana.domain.repository.recommendation
 
-import com.savana.data.network.model.recommendation.RecommendationResponse
+import com.savana.domain.models.Recommendation
 
 interface RecommendationRepository {
-    suspend fun fetchData(): RecommendationResponse?
+    suspend fun recommendationTracks(): Result<Recommendation>
 }

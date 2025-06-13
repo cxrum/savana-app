@@ -31,17 +31,17 @@ fun MusicPlayerScreenForScrollView(
     val uiState by viewModel.uiState.collectAsState()
     val tracksData by recommendationViewModel.recommendationData.collectAsState()
 
-    LaunchedEffect(tracksData.tracks) {
-        if (tracksData.tracks.isNotEmpty()) {
-            viewModel.loadTracks(tracksData.tracks)
+    LaunchedEffect(tracksData.trackInfos) {
+        if (tracksData.trackInfos.isNotEmpty()) {
+            viewModel.loadTracks(tracksData.trackInfos)
         }
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
         TrackListView(
-            tracks = uiState.tracks,
+            trackInfos = uiState.trackInfos,
 
-            currentPlayingTrack = uiState.currentPlayingTrack,
+            currentPlayingTrackInfo = uiState.currentPlayingTrackInfo,
             isPlaying = uiState.isPlaying,
             onTrackClick = { track -> viewModel.onTrackSelected(track) },
             modifier = Modifier

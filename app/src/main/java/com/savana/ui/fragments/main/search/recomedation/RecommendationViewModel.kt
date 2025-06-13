@@ -1,20 +1,15 @@
 package com.savana.ui.fragments.main.search.recomedation
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.savana.domain.models.RadarChartData
 import com.savana.domain.models.RecommendationData
-import com.savana.domain.models.RecommendedTrack
-import com.savana.domain.models.charDataPlaceholder
-import com.savana.domain.usecases.recommendation.GetRecommendationsUseCase
+import com.savana.domain.models.TrackInfo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
 data class TrackRecommendationsState(
-    val tracks: List<RecommendedTrack> = emptyList()
+    val trackInfos: List<TrackInfo> = emptyList()
 )
 
 class RecommendationViewModel: ViewModel() {
@@ -31,7 +26,7 @@ class RecommendationViewModel: ViewModel() {
     fun processRecommendationData(data: RecommendationData) {
         _charData.value = data.chartData
         _recommendationData.value = TrackRecommendationsState(
-            tracks = data.recommendedTracks
+            trackInfos = data.trackInfos
         )
         _state.value = state.value.copy(
             isLoading = false

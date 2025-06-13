@@ -1,49 +1,59 @@
 package com.savana.domain.usecases.recommendation
 
 import com.savana.domain.models.RecommendationData
-import com.savana.domain.models.RecommendedTrack
-import com.savana.domain.models.SelectedTrackGap
-import com.savana.domain.models.charDataPlaceholder
-import kotlinx.coroutines.delay
+import com.savana.domain.models.TrackInfo
+import com.savana.domain.models.UploadedTrackData
+import com.savana.domain.repository.recommendation.RecommendationRepository
+import com.savana.domain.repository.track.TrackRepository
 
-class GetRecommendationsUseCase {
+class GetRecommendationsUseCase(
+    private val trackRepository: TrackRepository,
+    private val recommendationRepository: RecommendationRepository
+) {
 
 
-    suspend operator fun invoke(historyId: Int): RecommendationData{
-        delay(1000)
-        return placeholder
-    }
+    suspend operator fun invoke(trackId: Int): Result<RecommendationData> {
+        val uploadedTrackResult = trackRepository.trackInfo(trackId)
+        if (uploadedTrackResult.isFailure) {
+            return Result.failure(uploadedTrackResult.exceptionOrNull()!!)
+        }
+        val uploadedTrack = uploadedTrackResult.getOrThrow()
 
-    suspend operator fun invoke(): RecommendationData{
-        delay(1000)
-        return placeholder
-    }
+        val recommendationsResult = recommendationRepository.recommendationTracks()
+        if (recommendationsResult.isFailure) {
+            return Result.failure(recommendationsResult.exceptionOrNull()!!)
+        }
+        val recommendations = recommendationsResult.getOrThrow()
 
-    companion object {
-        val placeholder = RecommendationData(
-            data = "Test",
-            recommendedTracks = listOf(
-                RecommendedTrack(
-                    id = 1,
-                    title = "Bohemian Rhapsody",
-                    albumTitle = "Bohemian Rhapsody",
-                    albumArtUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Bohemian_Rhapsody.png/220px-Bohemian_Rhapsody.png",
-                    artistName = "Queen",
-                    totalDurationSeconds = 354,
-                    streamUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                ),
-                RecommendedTrack(
-                    id = 2,
-                    title = "Stairway to Heaven",
-                    albumTitle = "Stairway to Heaven",
-                    albumArtUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/5/57/Stairway_to_Heaven_Accoustic.jpg/220px-Stairway_to_Heaven_Accoustic.jpg",
-                    artistName = "Led Zeppelin",
-                    totalDurationSeconds = 482,
-                    streamUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-                )
+        val recommendationsData = mutableListOf<TrackInfo>()
+
+        for (id in recommendations.tracks) {
+            val infoResult = trackRepository.trackInfo(id)
+            val fileResult = trackRepository.trackFile(id)
+
+            if (infoResult.isFailure || fileResult.isFailure) {
+                continue
+            }
+
+            val info = infoResult.getOrThrow()
+            val file = fileResult.getOrThrow()
+
+            recommendationsData.add(info.copy(bytesArray = file))
+        }
+
+        val recommendationData = RecommendationData(
+            uploadedTrackData = UploadedTrackData(
+                id = uploadedTrack.id,
+                title = uploadedTrack.title,
+                albumTitle = uploadedTrack.albumTitle,
+                albumArtUrl = uploadedTrack.albumArtUrl,
+                artistName = uploadedTrack.artistName,
+                chartData = uploadedTrack.chartData
             ),
-            chartData = charDataPlaceholder
+            trackInfos = recommendationsData
         )
+
+        return Result.success(recommendationData)
     }
 
 }

@@ -1,10 +1,10 @@
 package com.savana.ui.fragments.main.search.recomedation
 
-import com.savana.domain.models.RecommendedTrack
+import com.savana.domain.models.TrackInfo
 
 data class PlayerUiState(
-    val tracks: List<RecommendedTrack> = emptyList(),
-    val currentPlayingTrack: RecommendedTrack? = null,
+    val trackInfos: List<TrackInfo> = emptyList(),
+    val currentPlayingTrackInfo: TrackInfo? = null,
     val isPlaying: Boolean = false,
     val currentPositionMillis: Long = 0L,
     val totalDurationMillis: Long = 0L,

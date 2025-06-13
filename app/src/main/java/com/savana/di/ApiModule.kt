@@ -1,6 +1,8 @@
 package com.savana.di
 
 import com.savana.BuildConfig.API_URL
+import com.savana.data.network.services.recommendation.RecommendationService
+import com.savana.data.network.services.tracks.TrackService
 import com.savana.data.network.services.user.UserService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,6 +20,14 @@ fun provideRetrofit(baseUrl: String = "$API_URL/api/"): Retrofit {
 object api {
     val userService: UserService by lazy {
         provideRetrofit("$API_URL/api/users").create(UserService::class.java)
+    }
+
+    val trackService: TrackService by lazy {
+        provideRetrofit("$API_URL/api/tracks").create(TrackService::class.java)
+    }
+
+    val recommendationService: RecommendationService by lazy {
+        provideRetrofit("$API_URL/api/tracks").create(RecommendationService::class.java)
     }
 
 }
