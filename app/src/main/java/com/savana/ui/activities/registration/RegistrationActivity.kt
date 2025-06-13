@@ -76,7 +76,6 @@ class RegistrationActivity : AppCompatActivity(){
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
-
                 launch {
                     registrationViewModel.navigateToStepEvent.collect { event ->
                         event?.getContentIfNotHandled()?.let { stepToNavigateTo ->
@@ -86,7 +85,8 @@ class RegistrationActivity : AppCompatActivity(){
                                 val action = getNavigationAction(currentActualStep, stepToNavigateTo)
 
                                 if (stepToNavigateTo == Steps.REGISTERED) {
-                                    goToMain()
+                                    registrationViewModel.register()
+                                    registrationViewModel.startLoading()
                                     return@let
                                 }
 
@@ -113,8 +113,34 @@ class RegistrationActivity : AppCompatActivity(){
                         }
                     }
                 }
+
+                launch {
+                    registrationViewModel.state.collect{ state ->
+                        if (state.success){
+                            registrationViewModel.stopLoading()
+                            goToMain()
+                        }else{
+                            goToAuthentication()
+                            // TODO() Add error msg about registration unsuccessful
+                        }
+
+                        if (state.isLoading){
+                            showLoading()
+                        }else{
+                            disableLoading()
+                        }
+                    }
+                }
             }
         }
+    }
+
+    private fun disableLoading() {
+        TODO("Not yet implemented")
+    }
+
+    private fun showLoading() {
+        TODO("Not yet implemented")
     }
 
     private fun getNavigationAction(currentStep: Steps, targetStep: Steps): NavDirections? {

@@ -33,9 +33,6 @@ class WelcomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // TODO() Move registration into RegisterActivity
-        registrationViewModel.register()
         setupListeners()
     }
 

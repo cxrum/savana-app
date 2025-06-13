@@ -28,15 +28,33 @@ class AuthenticationViewModel(
 
     fun login(){
         viewModelScope.launch {
+
+
             val email = state.value.email!!
             val password = state.value.password!!
 
-            loginUseCase(
+            val result = loginUseCase(
                 LoginData(
                     email = email,
                     password = password
                 )
             )
+
+            _state.value = _state.value.copy(
+                success = result.isSuccess
+            )
         }
+    }
+
+    fun startLoading(){
+        _state.value = _state.value.copy(
+            isLoading = true
+        )
+    }
+
+    fun stopLoading(){
+        _state.value = _state.value.copy(
+            isLoading = false
+        )
     }
 }

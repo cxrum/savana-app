@@ -20,6 +20,7 @@ import com.savana.R
 import com.savana.domain.models.RecommendationData
 import com.savana.ui.activities.main.OperationState
 import com.savana.ui.fragments.main.search.recomedation.RecommendationViewModel.ScreenState
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @UnstableApi
@@ -48,18 +49,37 @@ class RecommendationsFragment : Fragment() {
     private fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.recommendationResult.collect { state ->
+                launch {
+                    mainViewModel.recommendationResult.collect { state ->
 
-                    Log.d("State", state.toString())
+                        Log.d("State", state.toString())
 
-                    if (state is OperationState.Success<RecommendationData>) {
-                        val recommendationData = state.data
-                        recommendationViewModel.processRecommendationData(recommendationData)
-                        mainViewModel.operationHandled()
+                        if (state is OperationState.Success<RecommendationData>) {
+                            val recommendationData = state.data
+                            recommendationViewModel.processRecommendationData(recommendationData)
+                            mainViewModel.operationHandled()
+                        }
+                    }
+                }
+
+
+                launch {
+                    recommendationViewModel.state.collect{ state ->
+                        if (state.trackTitle != null && state.trackAuthor != null){
+                            setUpTrackData(
+                                state.trackTitle,
+                                state.trackAuthor
+                            )
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun setUpTrackData(title: String, author: String){
+        binding.trackTitle.text = title
+        binding.author.text = author
     }
 
     private fun setListeners(){

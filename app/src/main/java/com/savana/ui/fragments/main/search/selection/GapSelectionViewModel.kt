@@ -10,20 +10,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.util.UnstableApi
 import com.savana.R
+import com.savana.domain.models.SelectedTrackGap
+import com.savana.domain.repository.user.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
-class GapSelectionViewModel : ViewModel() {
+class GapSelectionViewModel() : ViewModel() {
 
     private val _state = MutableStateFlow(GapSelectionState())
     val state: StateFlow<GapSelectionState> = _state.asStateFlow()
 
     private val _currentAudioBytes = MutableStateFlow(ByteArray(0))
     val currentAudioBytes: StateFlow<ByteArray> = _currentAudioBytes
-
 
     @UnstableApi
     fun loadAudioFile(uri: Uri, contentResolver: ContentResolver, context: Context){

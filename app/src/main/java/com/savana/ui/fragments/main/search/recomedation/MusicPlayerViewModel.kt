@@ -11,6 +11,11 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import android.content.Context
+import android.net.Uri
+import androidx.annotation.OptIn
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import com.savana.data.local.song.ByteArrayDataSource
 import com.savana.domain.models.TrackInfo
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -96,17 +101,37 @@ class MusicPlayerViewModel(
         }
     }
 
+    @OptIn(UnstableApi::class)
     private fun prepareAndPlayTrack(trackInfo: TrackInfo) {
         val currentPlayer = exoPlayer ?: return
-        val mediaItem = MediaItem.Builder()
-            .setUri(trackInfo.streamUrl)
-            .setMediaId(trackInfo.id.toString())
-            .build()
 
-        currentPlayer.setMediaItem(mediaItem)
+        if (trackInfo.bytesArray != null) {
+            val dataSourceFactory = ByteArrayDataSource.Factory(trackInfo.bytesArray)
+
+            val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(MediaItem.fromUri(Uri.EMPTY))
+
+            currentPlayer.setMediaSource(mediaSource)
+        } else if (trackInfo.streamUrl != null) {
+            val mediaItem = MediaItem.Builder()
+                .setUri(trackInfo.streamUrl)
+                .setMediaId(trackInfo.id.toString())
+                .build()
+            currentPlayer.setMediaItem(mediaItem)
+        } else {
+            return
+        }
+
         currentPlayer.prepare()
         currentPlayer.play()
-        _uiState.update { it.copy(currentPlayingTrackInfo = trackInfo, totalDurationMillis = trackInfo.totalDurationSeconds * 1000L, currentPositionMillis = 0L) }
+
+        _uiState.update {
+            it.copy(
+                currentPlayingTrackInfo = trackInfo,
+                totalDurationMillis = trackInfo.totalDurationSeconds * 1000L,
+                currentPositionMillis = 0L
+            )
+        }
     }
 
 

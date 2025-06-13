@@ -40,7 +40,6 @@ fun MusicPlayerScreenForScrollView(
     Column(modifier = Modifier.fillMaxWidth()) {
         TrackListView(
             trackInfos = uiState.trackInfos,
-
             currentPlayingTrackInfo = uiState.currentPlayingTrackInfo,
             isPlaying = uiState.isPlaying,
             onTrackClick = { track -> viewModel.onTrackSelected(track) },

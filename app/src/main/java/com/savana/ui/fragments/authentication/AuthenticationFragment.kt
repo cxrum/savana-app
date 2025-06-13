@@ -42,6 +42,7 @@ class AuthenticationFragment : Fragment() {
 
         binding.login.setOnClickListener {
             authenticationViewModel.login()
+            authenticationViewModel.startLoading()
         }
     }
 }

@@ -24,7 +24,7 @@ fun Track.toDomainModel(): TrackInfo {
         artistName = this.artist ?: "Unknown",
         totalDurationSeconds = 0,
         chartData = this.criteria.map {
-            RadarEntry(it.value.toFloat())
+            RadarEntry(it.value.toFloat(), it.name)
         }
     )
 }

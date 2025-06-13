@@ -50,7 +50,7 @@ class RegistrationViewModel(
             val username = _state.value.nickname!!
             val avatarId = _state.value.avatarId!!
 
-            registerUseCase.invoke(
+            val result = registerUseCase.invoke(
                 RegistrationData(
                     email = email,
                     nickname = username,
@@ -58,7 +58,23 @@ class RegistrationViewModel(
                     avatarId = avatarId
                 )
             )
+
+            _state.value = _state.value.copy(
+                success = result.isSuccess
+            )
         }
+    }
+
+    fun startLoading(){
+        _state.value = _state.value.copy(
+            isLoading = true
+        )
+    }
+
+    fun stopLoading(){
+        _state.value = _state.value.copy(
+            isLoading = false
+        )
     }
 
     fun userRequestsNextStep() {

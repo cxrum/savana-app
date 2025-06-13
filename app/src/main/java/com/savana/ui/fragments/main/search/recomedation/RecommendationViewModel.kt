@@ -24,20 +24,14 @@ class RecommendationViewModel: ViewModel() {
     val state: StateFlow<RecommendationState> = _state.asStateFlow()
 
     fun processRecommendationData(data: RecommendationData) {
-        _charData.value = data.chartData
+        _charData.value = RadarChartData(data.uploadedTrackData.chartData)
         _recommendationData.value = TrackRecommendationsState(
             trackInfos = data.trackInfos
         )
         _state.value = state.value.copy(
-            isLoading = false
-        )
-        songData()
-    }
-
-    private fun songData(){
-        _state.value = state.value.copy(
-            trackTitle = "Example fetched song title title title title title title title title",
-            trackAuthor = "Example fetched song author"
+            isLoading = false,
+            trackTitle = data.uploadedTrackData.title,
+            trackAuthor = data.uploadedTrackData.artistName
         )
     }
 

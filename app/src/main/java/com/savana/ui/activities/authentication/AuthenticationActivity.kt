@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.savana.ui.activities.main.MainActivity
 import com.savana.ui.splash.NavigationTarget
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class AuthenticationActivity : AppCompatActivity(){
@@ -63,11 +64,41 @@ class AuthenticationActivity : AppCompatActivity(){
         setupObservers()
     }
 
-
     private fun setupObservers(){
         authenticationViewModel.eventLiveData.observe(this){
             goToRegistration()
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+
+                launch {
+                    authenticationViewModel.state.collect{ state ->
+                        if (state.success){
+                            authenticationViewModel.stopLoading()
+                            goToMain()
+                        }else{
+                            // TODO() Show error msg about unsuccessful auth
+                        }
+
+                        if (state.isLoading){
+                            showLoading()
+                        }else{
+                            disableLoading()
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun showLoading(){
+        TODO("Not yet implemented")
+    }
+
+    private fun disableLoading(){
+        TODO("Not yet implemented")
     }
 
     private fun goToRegistration(){

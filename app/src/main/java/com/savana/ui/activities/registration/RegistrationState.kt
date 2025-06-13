@@ -8,5 +8,5 @@ data class RegistrationState(
     val isLoading: Boolean = false,
     val success: Boolean = false,
     val currentStep: RegistrationViewModel.Companion.Steps? = RegistrationViewModel.Companion.Steps.EMAIL,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
 )

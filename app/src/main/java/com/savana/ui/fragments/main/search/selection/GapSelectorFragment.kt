@@ -104,11 +104,12 @@ class GapSelectorFragment : Fragment() {
 
         binding.confirmButtonAction.setOnClickListener {
             val range = binding.songGapSelector.getCurrentRange()
-            Toast.makeText(requireContext(), "Range selected: ${range.first}s - ${range.second}s", Toast.LENGTH_LONG).show()
             mainViewModel.startMusicAnalyzingProcess(
                 SelectedTrackGap(
                     gapStart = range.first * 1000L,
                     gapEnd = range.second * 1000L,
+                    trackData = gapSelectionViewModel.currentAudioBytes.value,
+                    trackTitle = gapSelectionViewModel.state.value.title!!
                 )
             )
         }
