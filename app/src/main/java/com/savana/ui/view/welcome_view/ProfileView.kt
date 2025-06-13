@@ -29,4 +29,10 @@ class ProfileView @JvmOverloads constructor(
             }
         }
     }
+
+    fun setOnLogoutClicked(callback: ()->Unit){
+        binding.logout.setOnClickListener {
+            callback()
+        }
+    }
 }

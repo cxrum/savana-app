@@ -51,10 +51,8 @@ class RecommendationsFragment : Fragment() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     mainViewModel.recommendationResult.collect { state ->
-
-                        Log.d("State", state.toString())
-
                         if (state is OperationState.Success<RecommendationData>) {
+                            mainViewModel.operationLoading()
                             val recommendationData = state.data
                             recommendationViewModel.processRecommendationData(recommendationData)
                             mainViewModel.operationHandled()

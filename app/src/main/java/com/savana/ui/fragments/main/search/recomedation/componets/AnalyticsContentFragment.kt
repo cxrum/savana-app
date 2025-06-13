@@ -20,7 +20,6 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import com.savana.R
 import com.savana.databinding.FragmentAnalyticsContentBinding
 import com.savana.domain.models.RadarChartData
-import com.savana.domain.models.charDataPlaceholder
 import com.savana.ui.fragments.main.search.recomedation.RecommendationViewModel
 import kotlinx.coroutines.launch
 
@@ -45,17 +44,25 @@ class AnalyticsContentFragment : Fragment(R.layout.fragment_analytics_content) {
         super.onViewCreated(view, savedInstanceState)
 
         setupObservers()
-        setChartData(charDataPlaceholder)
     }
 
     private fun setupObservers(){
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                recommendationViewModel.state.collect{ state ->
-                    if (state.isLoading){
-                        showLoading()
-                    }else{
-                        showContent()
+
+                launch {
+                    recommendationViewModel.state.collect{ state ->
+                        if (state.isLoading){
+                            showLoading()
+                        }else{
+                            showContent()
+                        }
+                    }
+                }
+
+                launch {
+                    recommendationViewModel.charData.collect{ data ->
+                        setChartData(data)
                     }
                 }
             }

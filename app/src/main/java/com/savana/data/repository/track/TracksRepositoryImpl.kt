@@ -1,6 +1,7 @@
 package com.savana.data.repository.track
 
 import com.savana.di.api
+import com.savana.domain.models.Status
 import com.savana.domain.models.TrackInfo
 import com.savana.domain.models.toDomainModel
 import com.savana.domain.repository.track.TrackRepository
@@ -35,6 +36,30 @@ class TracksRepositoryImpl: TrackRepository {
                 if (track != null) {
                     val trackInfo = track.toDomainModel()
                     Result.success(trackInfo)
+                } else {
+                    Result.failure(Exception("Track data is null"))
+                }
+            } else {
+                Result.failure(Exception("Failed to load track info: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun trackStatus(trackId: Int): Result<Status> {
+        return try {
+            val response = api.trackService.trackStatus(trackId)
+
+            if (response.isSuccessful) {
+                val body = response.body()
+                val status = body?.data?.trackStatus
+                if (status != null) {
+                    val trackStatus = when(status){
+                        200 -> Status.Success
+                        else -> Status.Analyzing
+                    }
+                    Result.success(trackStatus)
                 } else {
                     Result.failure(Exception("Track data is null"))
                 }

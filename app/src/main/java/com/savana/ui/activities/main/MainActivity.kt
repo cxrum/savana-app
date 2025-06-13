@@ -1,7 +1,9 @@
 package com.savana.ui.activities.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -19,6 +21,7 @@ import com.savana.R
 import com.savana.databinding.ActivityMainBinding
 import com.savana.ui.activities.main.history.HistoryAdapter
 import com.savana.domain.models.HistoryEntry
+import com.savana.ui.activities.authentication.AuthenticationActivity
 import com.savana.ui.decorators.SpacingItemDecoration
 import com.savana.ui.fragments.main.search.recomedation.RecommendationViewModel
 import kotlinx.coroutines.launch
@@ -74,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                     mainViewModel.recommendationResult.collect{ result ->
                         when(result){
                             is OperationState.Error -> handleMusicAnalyzeError()
-                            is OperationState.Idle -> {}
+                            is OperationState.Idle -> handleAnalyzeIdle()
                             is OperationState.Loading -> handleAnalyzeLoading()
                             is OperationState.Success<*> -> handleMusicAnalyzeSuccess()
                         }
@@ -86,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                         if (state.caption != null){
                             setCaption(state.caption)
                         }
+
                     }
                 }
 
@@ -149,6 +153,10 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
+            layerHistory.user.setOnLogoutClicked{
+                mainViewModel.logout()
+                goToAuthentication()
+            }
         }
     }
 
@@ -185,6 +193,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun handleAnalyzeIdle(){
+        if (navController.currentDestination?.id == R.id.loadingFragment) {
+            navController.navigate(R.id.action_loadingFragment_to_searchMainFragment)
+        }
+    }
+
     private fun handleMusicAnalyzeSuccess(){
         if (navController.currentDestination?.id == R.id.loadingFragment) {
             navController.navigate(R.id.action_loadingFragment_to_recomedationsFragment)
@@ -200,6 +214,13 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return androidx.navigation.ui.NavigationUI.navigateUp(navController, null)
                 || super.onSupportNavigateUp()
+    }
+
+    private fun goToAuthentication(){
+        val intent = Intent(this, AuthenticationActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 
 }

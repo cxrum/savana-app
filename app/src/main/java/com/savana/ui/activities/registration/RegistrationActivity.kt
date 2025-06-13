@@ -116,12 +116,14 @@ class RegistrationActivity : AppCompatActivity(){
 
                 launch {
                     registrationViewModel.state.collect{ state ->
-                        if (state.success){
-                            registrationViewModel.stopLoading()
-                            goToMain()
-                        }else{
-                            goToAuthentication()
-                            // TODO() Add error msg about registration unsuccessful
+                        if(state.success != null){
+                            if (state.success){
+                                registrationViewModel.stopLoading()
+                                goToMain()
+                            }else{
+                                goToAuthentication()
+                                // TODO() Add error msg about registration unsuccessful
+                            }
                         }
 
                         if (state.isLoading){
@@ -135,12 +137,12 @@ class RegistrationActivity : AppCompatActivity(){
         }
     }
 
-    private fun disableLoading() {
-        TODO("Not yet implemented")
+    private fun showLoading(){
+        // TODO("Not yet implemented")
     }
 
-    private fun showLoading() {
-        TODO("Not yet implemented")
+    private fun disableLoading(){
+        // TODO("Not yet implemented")
     }
 
     private fun getNavigationAction(currentStep: Steps, targetStep: Steps): NavDirections? {

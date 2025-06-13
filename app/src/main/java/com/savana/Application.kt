@@ -19,9 +19,9 @@ class Application: Application() {
             androidContext(this@Application)
             modules(
                 localStorageModule,
+                appMainModule,
                 authenticationModule,
                 registrationModule,
-                appMainModule
             )
         }
     }

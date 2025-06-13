@@ -83,6 +83,7 @@ dependencies {
     implementation(libs.coil.compose)
 
     implementation(libs.retrofit)
+    implementation(libs.logging.interceptor)
     implementation(libs.koin.android)
 
     implementation(libs.androidx.fragment.ktx)
@@ -106,5 +107,7 @@ dependencies {
 
     implementation(libs.androidx.viewpager2)
     implementation(libs.core.splashscreen)
+
+
 
 }

@@ -74,32 +74,20 @@ class AuthenticationActivity : AppCompatActivity(){
 
                 launch {
                     authenticationViewModel.state.collect{ state ->
-                        if (state.success){
-                            authenticationViewModel.stopLoading()
-                            goToMain()
-                        }else{
-                            // TODO() Show error msg about unsuccessful auth
-                        }
-
-                        if (state.isLoading){
-                            showLoading()
-                        }else{
-                            disableLoading()
+                        if (state.success != null){
+                            if (state.success){
+                                authenticationViewModel.stopLoading()
+                                goToMain()
+                            }else{
+                                // TODO() Show error msg about unsuccessful auth
+                            }
                         }
                     }
                 }
-
             }
         }
     }
 
-    private fun showLoading(){
-        TODO("Not yet implemented")
-    }
-
-    private fun disableLoading(){
-        TODO("Not yet implemented")
-    }
 
     private fun goToRegistration(){
         val intent = Intent(this, RegistrationActivity::class.java)

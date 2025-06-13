@@ -6,7 +6,7 @@ data class RegistrationState(
     val password: String? = null,
     val avatarId: Int? = null,
     val isLoading: Boolean = false,
-    val success: Boolean = false,
+    val success: Boolean? = null,
     val currentStep: RegistrationViewModel.Companion.Steps? = RegistrationViewModel.Companion.Steps.EMAIL,
     val errorMessage: String? = null,
 )

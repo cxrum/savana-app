@@ -22,8 +22,6 @@ class StartupViewModel(
 
     private fun checkAuthStatus() {
         viewModelScope.launch {
-            delay(1500L)
-
             if (checkAuthenticationUseCase()) {
                 _navigationTarget.value = NavigationTarget.LoggedIn
             } else {

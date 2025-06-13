@@ -49,7 +49,6 @@ fun MusicPlayerScreenForScrollView(
     }
 }
 
-
 class RecommendationContentFragment : Fragment(R.layout.fragment_recommendations_content) {
 
     private val musicPlayerViewModel: MusicPlayerViewModel  by viewModel()

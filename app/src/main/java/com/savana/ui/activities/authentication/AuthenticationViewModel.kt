@@ -1,9 +1,11 @@
 package com.savana.ui.activities.authentication
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.savana.R
 import com.savana.core.utils.Event
 import com.savana.domain.models.user.LoginData
 import com.savana.domain.usecases.authentication.LoginUseCase
@@ -26,12 +28,19 @@ class AuthenticationViewModel(
         _eventLiveData.value = Event(Unit)
     }
 
-    fun login(){
+    fun login() {
         viewModelScope.launch {
+            val email = state.value.email
+            val password = state.value.password
 
+            if (email.isNullOrBlank() || password.isNullOrBlank()) {
+                _state.value = _state.value.copy(
+                    errorMessage = "Email or password cannot be empty"
+                )
+                return@launch
+            }
 
-            val email = state.value.email!!
-            val password = state.value.password!!
+            startLoading()
 
             val result = loginUseCase(
                 LoginData(
@@ -41,8 +50,10 @@ class AuthenticationViewModel(
             )
 
             _state.value = _state.value.copy(
-                success = result.isSuccess
+                success = result.isSuccess,
+                errorMessage = if (result.isFailure) result.exceptionOrNull()?.message else null
             )
+            stopLoading()
         }
     }
 
@@ -52,9 +63,23 @@ class AuthenticationViewModel(
         )
     }
 
+    fun setEmail(email: String){
+        _state.value = state.value.copy(email = email.trim())
+    }
+
+    fun setPassword(email: String){
+        _state.value = state.value.copy(password = email.trim())
+    }
+
     fun stopLoading(){
         _state.value = _state.value.copy(
             isLoading = false
+        )
+    }
+
+    fun clearErrorMsg(){
+        _state.value = _state.value.copy(
+            errorMessage = null
         )
     }
 }

@@ -93,6 +93,7 @@
         >
 
         <com.savana.ui.view.welcome_view.ProfileView
+            android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </com.savana.ui.view.welcome_view.ProfileView>

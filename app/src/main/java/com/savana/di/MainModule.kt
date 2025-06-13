@@ -10,6 +10,7 @@ import com.savana.domain.repository.track.TrackRepository
 import com.savana.domain.usecases.history.GetHistoryUseCase
 import com.savana.domain.usecases.recommendation.GetRecommendationsUseCase
 import com.savana.domain.usecases.recommendation.SendTrackToAnalysisUseCase
+import com.savana.domain.usecases.user.LogoutUseCase
 import com.savana.ui.activities.main.MainViewModel
 import com.savana.ui.fragments.main.search.main.SearchMainViewModel
 import com.savana.ui.fragments.main.search.recomedation.MusicPlayerViewModel
@@ -39,7 +40,9 @@ val appMainModule = module {
 
 
     single {
-        GetHistoryUseCase()
+        GetHistoryUseCase(
+            get()
+        )
     }
 
     single {
@@ -51,6 +54,12 @@ val appMainModule = module {
 
     single {
         SendTrackToAnalysisUseCase(
+            get()
+        )
+    }
+
+    single {
+        LogoutUseCase(
             get()
         )
     }
@@ -73,6 +82,7 @@ val appMainModule = module {
 
     viewModel {
         MainViewModel(
+            get(),
             get(),
             get(),
             get()

@@ -37,6 +37,11 @@ class UserRepositoryImpl(
         }
     }
 
+    fun sanitizeFileName(input: String): String {
+        val nameWithoutExtension = input.substringBeforeLast('.', input)
+        return nameWithoutExtension.filter { it.code in 32..126 }
+    }
+
     override suspend fun sendTrackToAnalyze(track: SelectedTrackGap): Result<Int> {
         return try {
             val userId = userDao.getId()
@@ -46,7 +51,7 @@ class UserRepositoryImpl(
 
             val response = api.userService.uploadTrack(
                 contentType = "audio/mpeg",
-                contentDescription = "attachment; filename=\"${track.trackTitle}\"",
+                contentDescription = "attachment; filename=\"${sanitizeFileName(track.trackTitle)}\"",
                 contentLength = track.trackData.size.toLong(),
                 userId = userId,
                 body = requestBody

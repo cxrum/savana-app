@@ -27,13 +27,25 @@ class AuthenticationRepositoryImpl(
                 )
             )
 
-            if (response.isSuccessful && response.body() != null) {
-                val userResponse = response.body()!!.userResponse
-                userDao.setId(userResponse.id)
-                Result.success(userResponse.toDomain())
+            val body = response.body()
+
+            if (response.isSuccessful && body != null) {
+                if (body.status == "success" && body.data != null) {
+                    val userResponse = body.data.user
+                    userDao.setId(userResponse.id)
+                    Result.success(userResponse.toDomain())
+                } else {
+                    val msg = body.message ?: "Unknown error"
+                    Result.failure(LoginFailedException(msg))
+                }
             } else {
-                Result.failure(LoginFailedException("Login failed with code: ${response.code()}"))
+                val msg = when(response.code()){
+                    401 -> "Invalid email or password"
+                    else -> "Login failed with code: ${response.code()}"
+                }
+                Result.failure(LoginFailedException(msg))
             }
+
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -51,7 +63,7 @@ class AuthenticationRepositoryImpl(
             )
 
             if (response.isSuccessful && response.body() != null) {
-                val newUserId = response.body()!!.userId
+                val newUserId = response.body()!!.data!!.userId
                 userDao.setId(newUserId)
 
                 val userData = UserData(

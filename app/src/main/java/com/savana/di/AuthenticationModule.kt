@@ -32,7 +32,7 @@ val authenticationModule = module {
     viewModel {
         StartupViewModel(
             checkAuthenticationUseCase = CheckAuthenticationUseCase(
-                userRepository = get()
+                get()
             )
         )
     }

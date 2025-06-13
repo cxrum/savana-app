@@ -104,12 +104,14 @@ class GapSelectorFragment : Fragment() {
 
         binding.confirmButtonAction.setOnClickListener {
             val range = binding.songGapSelector.getCurrentRange()
+            val title = gapSelectionViewModel.state.value.title
+                ?: gapSelectionViewModel.state.value.fileName!!.lowercase().removeSuffix(".mp3")
             mainViewModel.startMusicAnalyzingProcess(
                 SelectedTrackGap(
                     gapStart = range.first * 1000L,
                     gapEnd = range.second * 1000L,
                     trackData = gapSelectionViewModel.currentAudioBytes.value,
-                    trackTitle = gapSelectionViewModel.state.value.title!!
+                    trackTitle = title
                 )
             )
         }

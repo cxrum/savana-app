@@ -103,14 +103,13 @@ class RegistrationViewModel(
     }
 
     fun updateAvatars(){
-
         viewModelScope.launch {
             _avatars.value = getAvatarsUseCase()
         }
     }
 
     fun getRandomAvatar(): AvatarData?{
-        return avatars.value?.get(Random.nextInt() % (avatars.value?.size ?: 1))
+        return avatars.value?.get(1)
     }
 
     fun onEmailChanged(email: String, context: Context){
