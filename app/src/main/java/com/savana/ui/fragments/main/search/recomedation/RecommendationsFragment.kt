@@ -2,26 +2,23 @@ package com.savana.ui.fragments.main.search.recomedation
 
 import ScreenSlidePagerAdapter
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.media3.common.util.UnstableApi
-import com.savana.databinding.FragmentRecomedationsBinding
-import com.savana.ui.activities.main.MainViewModel
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.media3.common.util.UnstableApi
 import androidx.viewpager2.widget.ViewPager2
 import com.savana.R
+import com.savana.databinding.FragmentRecomedationsBinding
 import com.savana.domain.models.RecommendationData
+import com.savana.ui.activities.main.MainViewModel
 import com.savana.ui.activities.main.OperationState
 import com.savana.ui.fragments.main.search.recomedation.RecommendationViewModel.ScreenState
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 @UnstableApi
 class RecommendationsFragment : Fragment() {
