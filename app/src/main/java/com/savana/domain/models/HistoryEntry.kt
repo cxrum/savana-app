@@ -11,5 +11,16 @@ data class HistoryEntry(
 enum class Status{
     Analyzing,
     Deny,
-    Success
+    Success;
+
+    companion object{
+        fun getStatus(statusCode: Int): Status{
+            return when(statusCode){
+                200 -> Success
+                202 -> Analyzing
+                102 -> Analyzing
+                else -> Deny
+            }
+        }
+    }
 }

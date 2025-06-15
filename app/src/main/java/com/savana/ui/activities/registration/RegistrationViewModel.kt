@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.savana.R
+import com.savana.core.newtwork.ConnectivityObserver
 import com.savana.core.utils.Event
 import com.savana.domain.models.AvatarData
 import com.savana.domain.models.user.RegistrationData
@@ -15,12 +16,13 @@ import com.savana.domain.usecases.authentication.RegisterUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class RegistrationViewModel(
     private val getAvatarsUseCase: GetAvatarsUseCase,
-    private val registerUseCase: RegisterUseCase
+    private val registerUseCase: RegisterUseCase,
+    private val connectivityObserver: ConnectivityObserver
 ): ViewModel() {
 
     private val _state: MutableStateFlow<RegistrationState> = MutableStateFlow(RegistrationState())
@@ -43,12 +45,20 @@ class RegistrationViewModel(
         updateAvatars()
     }
 
-    fun register(){
+    fun register(context: Context){
         viewModelScope.launch {
             val email = _state.value.email!!
             val password = _state.value.password!!
             val username = _state.value.nickname!!
             val avatarId = _state.value.avatarId!!
+
+            val hasConnection = connectivityObserver.observe()
+            if (hasConnection.first()) {
+                _state.value = _state.value.copy(
+                    errorMessage = context.getString(R.string.no_internet_connection)
+                )
+                return@launch
+            }
 
             val result = registerUseCase.invoke(
                 RegistrationData(

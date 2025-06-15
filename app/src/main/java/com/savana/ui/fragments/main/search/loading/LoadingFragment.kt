@@ -1,19 +1,17 @@
 package com.savana.ui.fragments.main.search.loading
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import com.savana.R
 import com.savana.databinding.FragmentLoadingBinding
 import com.savana.ui.activities.main.MainViewModel
-import com.savana.ui.fragments.main.search.selection.GapSelectorFragmentArgs
 import kotlinx.coroutines.launch
 
 class LoadingFragment : Fragment() {
@@ -22,6 +20,8 @@ class LoadingFragment : Fragment() {
 
     private var _binding: FragmentLoadingBinding? = null
     private val binding get() = _binding!!
+
+    private val args: LoadingFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,6 @@ class LoadingFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
-
                 launch {
                     mainViewModel.mainState.collect { state ->
                         if (state.canLeaveLoadingScreen){
@@ -55,6 +54,14 @@ class LoadingFragment : Fragment() {
             }
         }
 
+        if (args.msg != null){
+            setUserMessage(args.msg!!)
+        }
+
+    }
+
+    private fun setUserMessage(msg: String){
+        binding.message.text = msg
     }
 
     private fun canLeave(){
@@ -64,7 +71,5 @@ class LoadingFragment : Fragment() {
     private fun notCanLeave(){
         binding.leaveScreenLabel.visibility = View.GONE
     }
-
-
 
 }

@@ -1,10 +1,12 @@
 package com.savana.data.repository.track
 
+import com.savana.core.exeption.AuthenticationException
 import com.savana.di.api
 import com.savana.domain.models.Status
 import com.savana.domain.models.TrackInfo
 import com.savana.domain.models.toDomainModel
 import com.savana.domain.repository.track.TrackRepository
+import java.net.UnknownHostException
 
 class TracksRepositoryImpl: TrackRepository {
     override suspend fun trackFile(trackId: Int): Result<ByteArray> {
@@ -42,8 +44,10 @@ class TracksRepositoryImpl: TrackRepository {
             } else {
                 Result.failure(Exception("Failed to load track info: ${response.code()}"))
             }
-        } catch (e: Exception) {
-            Result.failure(e)
+        }catch (e: UnknownHostException){
+            Result.failure(AuthenticationException(null))
+        } finally {
+            Result.failure<Exception>(Exception())
         }
     }
 
@@ -55,10 +59,7 @@ class TracksRepositoryImpl: TrackRepository {
                 val body = response.body()
                 val status = body?.data?.trackStatus
                 if (status != null) {
-                    val trackStatus = when(status){
-                        200 -> Status.Success
-                        else -> Status.Analyzing
-                    }
+                    val trackStatus = Status.getStatus(status)
                     Result.success(trackStatus)
                 } else {
                     Result.failure(Exception("Track data is null"))
@@ -66,8 +67,10 @@ class TracksRepositoryImpl: TrackRepository {
             } else {
                 Result.failure(Exception("Failed to load track info: ${response.code()}"))
             }
-        } catch (e: Exception) {
-            Result.failure(e)
+        }catch (e: UnknownHostException){
+            Result.failure(AuthenticationException(null))
+        } finally {
+            Result.failure<Exception>(Exception())
         }
     }
 }

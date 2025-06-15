@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -107,6 +106,7 @@ class GapSelectorFragment : Fragment() {
             val title = gapSelectionViewModel.state.value.title
                 ?: gapSelectionViewModel.state.value.fileName!!.lowercase().removeSuffix(".mp3")
             mainViewModel.startMusicAnalyzingProcess(
+                requireContext(),
                 SelectedTrackGap(
                     gapStart = range.first * 1000L,
                     gapEnd = range.second * 1000L,

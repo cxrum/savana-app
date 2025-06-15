@@ -4,23 +4,21 @@ import com.savana.domain.models.HistoryEntry
 import com.savana.domain.models.Status
 import com.savana.domain.repository.track.TrackRepository
 import com.savana.domain.repository.user.UserRepository
-import kotlinx.coroutines.delay
 
 class GetHistoryUseCase(
-    private val trackRepository: TrackRepository
+    private val trackRepository: TrackRepository,
+    private val userRepository: UserRepository
 ) {
 
-    private val historySuccessPlaceholder = HistoryEntry(
-        id = 76,
-        label = "Allah",
-        status = Status.Success
-    )
-
     suspend operator fun invoke(): Result<List<HistoryEntry>>{
-        delay(1000)
-        return Result.success(buildList {
-            add(historySuccessPlaceholder)
-        })
+
+        val res = userRepository.getHistory()
+
+        return if (res.isSuccess){
+            Result.success(res.getOrNull() ?: emptyList())
+        }else{
+            Result.failure(res.exceptionOrNull() ?: Exception())
+        }
     }
 
     suspend operator fun invoke(trackId: Int): Result<HistoryEntry>{
@@ -53,6 +51,7 @@ class GetHistoryUseCase(
                         Result.failure(Exception())
                     }
                 }
+
             }
         }
 

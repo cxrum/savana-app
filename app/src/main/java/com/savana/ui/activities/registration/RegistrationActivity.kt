@@ -17,13 +17,13 @@ import com.savana.R
 import com.savana.databinding.ActivityRegistrationBinding
 import com.savana.ui.activities.authentication.AuthenticationActivity
 import com.savana.ui.activities.main.MainActivity
+import com.savana.ui.activities.registration.RegistrationViewModel.Companion.Steps
 import com.savana.ui.fragments.registration.EmailFragmentDirections
 import com.savana.ui.fragments.registration.NameFragmentDirections
 import com.savana.ui.fragments.registration.PasswordFragmentDirections
 import com.savana.ui.fragments.registration.avatar.SelectAvatarFragmentDirections
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.savana.ui.activities.registration.RegistrationViewModel.Companion.Steps as Steps
 
 class RegistrationActivity : AppCompatActivity(){
 
@@ -85,7 +85,7 @@ class RegistrationActivity : AppCompatActivity(){
                                 val action = getNavigationAction(currentActualStep, stepToNavigateTo)
 
                                 if (stepToNavigateTo == Steps.REGISTERED) {
-                                    registrationViewModel.register()
+                                    registrationViewModel.register(this@RegistrationActivity)
                                     registrationViewModel.startLoading()
                                     return@let
                                 }

@@ -5,8 +5,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.content.withStyledAttributes
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.savana.R
 import com.savana.databinding.ViewProfileBinding
+import com.savana.domain.models.user.UserData
 
 class ProfileView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -33,6 +36,16 @@ class ProfileView @JvmOverloads constructor(
     fun setOnLogoutClicked(callback: ()->Unit){
         binding.logout.setOnClickListener {
             callback()
+        }
+    }
+
+    fun setUserInfo(userData: UserData){
+        binding.username.text = userData.nickname
+        binding.userPfp.load(userData.avatar) {
+            crossfade(true)
+            placeholder(R.drawable.ic_image_placeholder)
+            error(R.drawable.ic_image_placeholder)
+            transformations(CircleCropTransformation())
         }
     }
 }

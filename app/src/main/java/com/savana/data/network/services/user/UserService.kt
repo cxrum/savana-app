@@ -1,6 +1,8 @@
 package com.savana.data.network.services.user
 
 import com.savana.data.network.model.ApiResponse
+import com.savana.data.network.model.user.HistoryEntryResponse
+import com.savana.data.network.model.user.HistoryResponse
 import com.savana.data.network.model.user.LoginRequest
 import com.savana.data.network.model.user.RegisterRequest
 import com.savana.data.network.model.user.RegisterResponseData
@@ -42,5 +44,10 @@ interface UserService {
         @Path("userId") userId: Int,
         @Body body: RequestBody
     ): Response<ApiResponse<TrackUploaded>>
+
+    @GET("{userId}/history")
+    suspend fun history(
+        @Path("userId") userId: Int
+    ): Response<ApiResponse<HistoryResponse>>
 
 }

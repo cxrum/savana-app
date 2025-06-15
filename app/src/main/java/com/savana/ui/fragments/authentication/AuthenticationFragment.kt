@@ -1,20 +1,15 @@
 package com.savana.ui.fragments.authentication
 
 import android.os.Bundle
-import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.savana.R
-import com.savana.core.extension.hideKeyboard
 import com.savana.databinding.FragmentAuthenticationBinding
 import com.savana.ui.activities.authentication.AuthenticationViewModel
 import kotlinx.coroutines.launch
@@ -92,7 +87,7 @@ class AuthenticationFragment : Fragment() {
         }
 
         binding.login.setOnClickListener {
-            authenticationViewModel.login()
+            authenticationViewModel.login(this.requireContext())
         }
     }
 }

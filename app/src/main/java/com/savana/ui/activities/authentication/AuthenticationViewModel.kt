@@ -6,16 +6,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.savana.R
+import com.savana.core.newtwork.ConnectivityObserver
 import com.savana.core.utils.Event
 import com.savana.domain.models.user.LoginData
 import com.savana.domain.usecases.authentication.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class AuthenticationViewModel(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val connectivityObserver: ConnectivityObserver
 ): ViewModel() {
 
     private val _state: MutableStateFlow<AuthenticationState> = MutableStateFlow(AuthenticationState())
@@ -28,14 +31,22 @@ class AuthenticationViewModel(
         _eventLiveData.value = Event(Unit)
     }
 
-    fun login() {
+    fun login(context: Context) {
         viewModelScope.launch {
             val email = state.value.email
             val password = state.value.password
 
+            val hasConnection = connectivityObserver.observe()
+            if (hasConnection.first()) {
+                _state.value = _state.value.copy(
+                    errorMessage = context.getString(R.string.no_internet_connection)
+                )
+                return@launch
+            }
+
             if (email.isNullOrBlank() || password.isNullOrBlank()) {
                 _state.value = _state.value.copy(
-                    errorMessage = "Email or password cannot be empty"
+                    errorMessage = context.getString(R.string.email_or_password_cannot_be_empty)
                 )
                 return@launch
             }

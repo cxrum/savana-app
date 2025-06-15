@@ -1,5 +1,6 @@
 package com.savana.data.repository.authentication
 
+import com.savana.core.exeption.AuthenticationException
 import com.savana.core.exeption.LoginFailedException
 import com.savana.core.exeption.RegistrationFailedException
 import com.savana.data.local.user.UserDao
@@ -11,6 +12,7 @@ import com.savana.domain.models.user.RegistrationData
 import com.savana.domain.models.user.UserData
 import com.savana.domain.models.user.toDomain
 import com.savana.domain.repository.authentication.AuthenticationRepository
+import java.net.UnknownHostException
 
 class AuthenticationRepositoryImpl(
     private val userDao: UserDao
@@ -46,8 +48,10 @@ class AuthenticationRepositoryImpl(
                 Result.failure(LoginFailedException(msg))
             }
 
-        } catch (e: Exception) {
-            Result.failure(e)
+        }catch (e: UnknownHostException){
+            Result.failure(AuthenticationException(null))
+        } finally {
+            Result.failure<Exception>(Exception())
         }
     }
 
@@ -76,8 +80,10 @@ class AuthenticationRepositoryImpl(
             } else {
                 Result.failure(RegistrationFailedException("Registration failed with code: ${response.code()}"))
             }
-        } catch (e: Exception) {
-            Result.failure(e)
+        }catch (e: UnknownHostException){
+            Result.failure(AuthenticationException(null))
+        } finally {
+            Result.failure<Exception>(Exception())
         }
     }
 

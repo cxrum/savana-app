@@ -10,4 +10,5 @@ interface TrackRepository {
     suspend fun trackInfo(trackId: Int): Result<TrackInfo>
 
     suspend fun trackStatus(trackId: Int): Result<Status>
+
 }

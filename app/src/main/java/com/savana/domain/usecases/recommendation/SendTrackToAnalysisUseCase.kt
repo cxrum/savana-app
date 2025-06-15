@@ -8,8 +8,6 @@ class SendTrackToAnalysisUseCase(
 ) {
 
     suspend operator fun invoke(gap: SelectedTrackGap): Result<Int>{
-
-
         val result = userRepository.sendTrackToAnalyze(gap)
         return result
     }

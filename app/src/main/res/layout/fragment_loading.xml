@@ -10,6 +10,7 @@
     >
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Base.Theme.Savana.Text.Title"
