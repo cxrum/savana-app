@@ -3,6 +3,7 @@ package com.savana.ui.activities.registration
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -122,14 +123,7 @@ class RegistrationActivity : AppCompatActivity(){
                                 goToMain()
                             }else{
                                 goToAuthentication()
-                                // TODO() Add error msg about registration unsuccessful
                             }
-                        }
-
-                        if (state.isLoading){
-                            showLoading()
-                        }else{
-                            disableLoading()
                         }
                     }
                 }
@@ -137,13 +131,6 @@ class RegistrationActivity : AppCompatActivity(){
         }
     }
 
-    private fun showLoading(){
-        // TODO("Not yet implemented")
-    }
-
-    private fun disableLoading(){
-        // TODO("Not yet implemented")
-    }
 
     private fun getNavigationAction(currentStep: Steps, targetStep: Steps): NavDirections? {
         return when (currentStep) {

@@ -52,14 +52,6 @@ class RegistrationViewModel(
             val username = _state.value.nickname!!
             val avatarId = _state.value.avatarId!!
 
-            val hasConnection = connectivityObserver.observe()
-            if (hasConnection.first()) {
-                _state.value = _state.value.copy(
-                    errorMessage = context.getString(R.string.no_internet_connection)
-                )
-                return@launch
-            }
-
             val result = registerUseCase.invoke(
                 RegistrationData(
                     email = email,

@@ -2,6 +2,7 @@ package com.savana.ui.activities.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.media3.common.util.UnstableApi
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.savana.R
@@ -69,13 +71,19 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.userDataUpdate(this)
 
         setupHistoryAdapter()
-        setupListeners()
         setupObservers()
+        setupListeners()
     }
 
     private fun setupObservers(){
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                launch {
+                    mainViewModel.mainState.collect{ state ->
+                        setCaption(state.caption ?: "")
+                    }
+                }
 
                 launch {
                     mainViewModel.recommendationResult.collect{ result ->
@@ -88,15 +96,6 @@ class MainActivity : AppCompatActivity() {
                             )
                             is OperationState.Success<*> -> handleMusicAnalyzeSuccess()
                         }
-                    }
-                }
-
-                launch {
-                    mainViewModel.mainState.collect{ state ->
-                        if (state.caption != null){
-                            setCaption(state.caption)
-                        }
-
                     }
                 }
 
@@ -117,6 +116,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
+
         }
         mainViewModel.userData.observe(this){ data ->
             setupUserInfo(data)
@@ -229,9 +229,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleMusicAnalyzeError(msg: String? = null){
-        val action = ErrorFragmentDirections.actionGlobalToErrorFragment(msg)
-        navController.navigate(action)
+    private fun handleMusicAnalyzeError(msg: String? = null) {
+        val action = ErrorFragmentDirections
+            .actionGlobalToErrorFragment(msg)
+
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.loadingFragment, true)
+            .build()
+
+        navController.navigate(action, navOptions)
     }
 
     override fun onSupportNavigateUp(): Boolean {

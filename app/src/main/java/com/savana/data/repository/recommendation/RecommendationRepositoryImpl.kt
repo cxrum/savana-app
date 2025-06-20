@@ -7,7 +7,7 @@ class RecommendationRepositoryImpl:
     RecommendationRepository {
     override suspend fun recommendationTracks(): Result<Recommendation> {
         return Result.success(Recommendation(
-            tracks = emptyList()
+            tracks = listOf(1)
         ))
     }
 }

@@ -17,11 +17,12 @@ import androidx.navigation.fragment.findNavController
 import com.savana.databinding.FragmentSearchMainBinding
 import com.savana.ui.activities.main.MainViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchMainFragment : Fragment() {
 
-    private val mainViewModel: MainViewModel by viewModel()
+    private val mainViewModel: MainViewModel by activityViewModel()
     private val searchMainViewModel: SearchMainViewModel by viewModel()
 
     private var _binding: FragmentSearchMainBinding? = null
@@ -38,7 +39,6 @@ class SearchMainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentSearchMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -48,7 +48,6 @@ class SearchMainFragment : Fragment() {
 
         setupUiListeners()
         setupViewModelListeners()
-
     }
 
     override fun onResume() {

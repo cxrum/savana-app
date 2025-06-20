@@ -36,14 +36,6 @@ class AuthenticationViewModel(
             val email = state.value.email
             val password = state.value.password
 
-            val hasConnection = connectivityObserver.observe()
-            if (hasConnection.first()) {
-                _state.value = _state.value.copy(
-                    errorMessage = context.getString(R.string.no_internet_connection)
-                )
-                return@launch
-            }
-
             if (email.isNullOrBlank() || password.isNullOrBlank()) {
                 _state.value = _state.value.copy(
                     errorMessage = context.getString(R.string.email_or_password_cannot_be_empty)

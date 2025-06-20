@@ -34,8 +34,8 @@ class MainViewModel(
     private val _recommendationResult = MutableStateFlow<OperationState<RecommendationData>>(OperationState.Idle)
     val recommendationResult: StateFlow<OperationState<RecommendationData>> = _recommendationResult.asStateFlow()
 
-    private val _mainState = MutableStateFlow<MainState>(MainState())
-    val mainState: StateFlow<MainState> = _mainState.asStateFlow()
+    private val _mainState = MutableStateFlow(MainState())
+    val mainState = _mainState.asStateFlow()
 
     private val _history = MutableStateFlow(HistoryState())
     val history = _history.asStateFlow()
@@ -63,7 +63,9 @@ class MainViewModel(
     }
 
     fun setCaption(caption: String){
-        _mainState.value = _mainState.value.copy(caption = caption)
+        if (_mainState.value.caption != caption) {
+            _mainState.value = _mainState.value.copy(caption = caption)
+        }
     }
 
     fun historyForceUpdate(){

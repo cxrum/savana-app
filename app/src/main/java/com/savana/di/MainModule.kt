@@ -3,7 +3,9 @@ package com.savana.di
 import android.annotation.SuppressLint
 import com.savana.data.repository.recommendation.RecommendationRepositoryImpl
 import com.savana.data.repository.track.TracksRepositoryImpl
+import com.savana.data.repository.track.TracksRepositoryMockup
 import com.savana.data.repository.user.UserRepositoryImpl
+import com.savana.data.repository.user.UserRepositoryMockup
 import com.savana.domain.repository.recommendation.RecommendationRepository
 import com.savana.domain.repository.track.TrackRepository
 import com.savana.domain.repository.user.UserRepository
@@ -29,13 +31,13 @@ val appMainModule = module {
     }
 
     single<UserRepository> {
-        UserRepositoryImpl(
+        UserRepositoryMockup(
             get()
         )
     }
 
     single<TrackRepository> {
-        TracksRepositoryImpl()
+        TracksRepositoryMockup()
     }
 
 

@@ -3,6 +3,7 @@ package com.savana.ui.activities.authentication
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.snackbar.Snackbar
 import com.savana.ui.activities.main.MainActivity
 import com.savana.ui.splash.NavigationTarget
 import kotlinx.coroutines.flow.collect
@@ -78,8 +80,6 @@ class AuthenticationActivity : AppCompatActivity(){
                             if (state.success){
                                 authenticationViewModel.stopLoading()
                                 goToMain()
-                            }else{
-                                // TODO() Show error msg about unsuccessful auth
                             }
                         }
                     }

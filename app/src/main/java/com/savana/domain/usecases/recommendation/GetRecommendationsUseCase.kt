@@ -31,14 +31,16 @@ class GetRecommendationsUseCase(
             val infoResult = trackRepository.trackInfo(id)
             val fileResult = trackRepository.trackFile(id)
 
-            if (infoResult.isFailure || fileResult.isFailure) {
+            if (infoResult.isFailure || fileResult.isFailure ) {
+                val info = infoResult.getOrThrow()
+                recommendationsData.add(info.copy(streamUrl = info.streamUrl))
                 continue
             }
 
             val info = infoResult.getOrThrow()
             val file = fileResult.getOrThrow()
 
-            recommendationsData.add(info.copy(bytesArray = file))
+            recommendationsData.add(info.copy(bytesArray = file, streamUrl = info.streamUrl))
         }
 
         val recommendationData = RecommendationData(
