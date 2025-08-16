@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        app:cardCornerRadius="18dp">
+
+        <ImageView
+            android:id="@+id/album_art_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorSecondary"
+            android:src="@drawable/bg_music_album_placehoder"
+            android:scaleType="fitCenter"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+    <Space
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/text_block_spacing"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/song_name_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Title"
+        android:text="@string/unknown_track"
+        android:maxLines="2"
+        android:ellipsize="marquee"
+        android:textAlignment="center"
+        />
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_block_spacing"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <com.savana.ui.view.songplayer.SongGapSelectorView
+            android:id="@+id/songGapSelector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:sgs_totalDuration="0"
+            app:sgs_gapDuration="30"
+            app:sgs_inactiveTrackColor="@color/colorSecondary"
+            app:sgs_activeTrackColor="@color/colorAccent"
+            app:sgs_thumbColor="@color/colorOnBackground"
+            app:sgs_thumbRadius="8dp"
+            app:sgs_trackHeight="8dp"
+            app:sgs_textColor="@color/colorOnBackground"
+            app:sgs_textSize="12sp"
+            app:sgs_showTotalDurationText="true"
+            app:sgs_showSelectedRangeText="true"
+            android:layout_weight="1"
+            />
+
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="match_parent">
+        </Space>
+
+        <ImageButton
+            android:id="@+id/play_pause_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_play"
+            android:background="@android:color/transparent"
+            app:tint="@color/colorOnBackground"
+            android:scaleType="fitCenter"
+            />
+    </LinearLayout>
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirm_button_action"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/confirm"
+        app:cornerRadius="18dp"
+        android:enabled="false"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/confirm_button_text_restriction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Body2"
+        android:text="@string/song_length_restriction"
+        android:textAlignment="center"
+        />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/select_another_file_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/select_another_file"
+        app:cornerRadius="18dp"
+        android:backgroundTint="@color/colorSecondary"
+        android:textColor="@color/colorOnSecondary"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/cancel"
+        app:cornerRadius="18dp"
+        android:backgroundTint="@color/colorSecondary"
+        android:textColor="@color/colorOnSecondary"
+        />
+
+</LinearLayout>

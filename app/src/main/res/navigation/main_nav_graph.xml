@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph" app:startDestination="@id/searchMainFragment">
+
+    <action
+        android:id="@+id/action_global_to_loadingFragment"
+        app:destination="@id/loadingFragment">
+    </action>
+
+    <action
+        android:id="@+id/action_global_to_errorFragment"
+        app:destination="@id/errorFragment">
+    </action>
+
+    <action
+        android:id="@+id/action_global_to_Main"
+        app:destination="@id/searchMainFragment">
+    </action>
+
+    <action
+        android:id="@+id/action_global_to_GapSeelction"
+        app:destination="@id/gapSelectorFragment">
+    </action>
+
+    <fragment
+        android:id="@+id/searchMainFragment"
+        android:name="com.savana.ui.fragments.main.search.main.SearchMainFragment"
+        android:label="fragment_search_main"
+        tools:layout="@layout/fragment_search_main">
+        <action
+            android:id="@+id/action_searchMainFragment_to_gapSelectorFragment"
+            app:destination="@id/gapSelectorFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.savana.ui.fragments.main.search.loading.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading">
+
+        <argument
+            android:name="msg"
+            app:argType="string"
+            app:nullable="true"
+            />
+
+        <argument
+            android:name="canLeaveScreen"
+            app:argType="boolean"
+            />
+
+        <action
+            android:id="@+id/action_loadingFragment_to_recomedationsFragment"
+            app:destination="@id/recomedationsFragment"
+            app:popUpTo="@id/searchMainFragment"
+            app:popUpToInclusive="false"
+            />
+        <action
+            android:id="@+id/action_loadingFragment_to_searchMainFragment"
+            app:destination="@id/searchMainFragment"
+            app:popUpTo="@id/searchMainFragment"
+            app:popUpToInclusive="false"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gapSelectorFragment"
+        android:name="com.savana.ui.fragments.main.search.selection.GapSelectorFragment"
+        android:label="fragment_gap_selector"
+        tools:layout="@layout/fragment_gap_selector">
+
+        <argument
+            android:name="file_name"
+            app:argType="string"
+            app:nullable="true"
+            />
+        <argument
+            android:name="audio_uri"
+            app:argType="android.net.Uri"
+            app:nullable="true"
+            />
+
+        <action
+            android:id="@+id/action_gapSelectorFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment"
+            app:popUpTo="@id/searchMainFragment"
+            app:popUpToInclusive="true">
+        </action>
+        <action
+            android:id="@+id/action_gapSelectorFragment_to_searchMainFragment"
+            app:destination="@id/searchMainFragment"
+            app:popUpTo="@id/gapSelectorFragment"
+            app:popUpToInclusive="true"
+            />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/recomedationsFragment"
+        android:name="com.savana.ui.fragments.main.search.recomedation.RecommendationsFragment"
+        android:label="fragment_recomedations"
+        tools:layout="@layout/fragment_recomedations">
+        <action
+            android:id="@+id/action_recomedationsFragment_to_searchMainFragment"
+            app:destination="@id/searchMainFragment"
+            app:popUpTo="@id/searchMainFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="com.savana.ui.fragments.main.search.error.ErrorFragment"
+        android:label="fragment_error"
+        tools:layout="@layout/fragment_error">
+
+        <argument
+            android:name="msg"
+            app:argType="string"
+            app:nullable="true"
+            />
+
+    </fragment>
+
+
+</navigation>

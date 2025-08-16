@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.registration.WelcomeFragment"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/_top_layer"
+        >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:fontFamily="@font/martel_black"
+            android:textAllCaps="true"
+            android:textSize="36sp"
+            android:textColor="@color/colorOnBackground"
+            >
+        </com.google.android.material.textview.MaterialTextView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/inner_text_block_spacing">
+        </Space>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome"
+            android:fontFamily="@font/instrument_sans"
+            android:textSize="24sp"
+            android:textColor="@color/colorOnBackground"
+            >
+        </com.google.android.material.textview.MaterialTextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/_top_layer"
+        >
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            >
+        </Space>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <com.savana.ui.view.welcome_view.AnimatedBlobView
+                android:id="@+id/blob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:radiusMax="180dp"
+                app:radiusMin="150dp"
+                app:changeRange="20"
+                app:color="@color/colorAccent"
+                >
+            </com.savana.ui.view.welcome_view.AnimatedBlobView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                >
+
+                <ImageView
+                    android:layout_width="144dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/ic_logo_monochrome"
+                    android:scaleType="fitCenter"
+                    >
+                </ImageView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/martel_black"
+                    android:textColor="@color/backgroundColor"
+                    android:textSize="52sp"
+                    android:text="@string/welcome"
+                    >
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Base.Theme.Savana.Text.Title"
+                    android:textColor="@color/backgroundColor"
+                    android:text="username"
+                    >
+                </com.google.android.material.textview.MaterialTextView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/inner_text_block_spacing"
+            >
+        </Space>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.Theme.Savana.Text.Subtitle"
+            android:text="@string/welcome_press"
+            >
+        </com.google.android.material.textview.MaterialTextView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+        </Space>
+
+    </LinearLayout>
+
+</RelativeLayout>

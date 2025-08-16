@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardCornerRadius="100dp"
+            app:cardElevation="0dp"
+            >
+
+            <ImageView
+                android:id="@+id/user_pfp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_user_placeholder"
+                android:background="@color/colorSecondary"
+                >
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="@dimen/text_block_spacing"
+            android:layout_height="match_parent"
+            >
+        </Space>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/username_shimmer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:shimmer_auto_start="true"
+            app:shimmer_duration="1000">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unknown"
+                style="@style/Base.Theme.Savana.Text.Label1"
+                >
+            </com.google.android.material.textview.MaterialTextView>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown"
+            style="@style/Base.Theme.Savana.Text.Label1"
+            android:visibility="gone"
+            >
+        </com.google.android.material.textview.MaterialTextView>
+
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:minWidth="@dimen/text_block_spacing"
+            >
+        </Space>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="center"
+            android:background="@color/colorSecondary"
+            android:visibility="gone"
+            >
+        </ImageView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:orientation="vertical"
+        >
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/inner_text_block_spacing"
+            >
+        </Space>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.Theme.Savana.Text.Body1"
+            android:text="Logout"
+            app:icon="@drawable/ic_logout"
+            app:iconTint="@color/colorOnBackground"
+            app:iconSize="24dp"
+            android:background="@android:color/transparent"
+            android:textAlignment="textStart"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            >
+        </com.google.android.material.button.MaterialButton>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

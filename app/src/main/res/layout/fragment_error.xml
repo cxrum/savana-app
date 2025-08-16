@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.main.search.error.ErrorFragment"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+    <ImageView
+        android:layout_width="144dp"
+        android:layout_height="72dp"
+        android:src="@drawable/ic_logo_monochrome"
+        android:scaleType="fitCenter"
+        >
+    </ImageView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing">
+    </Space>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Title"
+        android:text="@string/something_happened"
+        >
+    </androidx.appcompat.widget.AppCompatTextView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/inner_text_block_spacing">
+    </Space>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Base.Theme.Savana.Text.Body2"
+        android:textColor="@color/colorError"
+        android:textAlignment="center"
+        android:paddingStart="64dp"
+        android:paddingEnd="64dp"
+        >
+    </com.google.android.material.textview.MaterialTextView>
+
+
+</LinearLayout>

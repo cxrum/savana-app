@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/colorSecondary"
+        android:width="48dp"
+        android:height="48dp"
+        />
+    <item android:drawable="@drawable/ic_user_placeholder_icon"
+        android:width="38dp"
+        android:height="38dp"
+        android:gravity="center"
+        />
+</layer-list>

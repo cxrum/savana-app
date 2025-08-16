@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.registration.EmailFragment"
+    android:orientation="vertical">
+
+    <com.savana.ui.view.welcome_view.TitleView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:title="@string/app_name"
+        app:subtitle="@string/select_avatar"
+        >
+    </com.savana.ui.view.welcome_view.TitleView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/blocked_item_spacing">
+    </Space>
+    
+    <ImageView
+        android:id="@+id/avatar_select"
+        android:layout_width="138dp"
+        android:layout_height="138dp"
+        android:background="@color/colorSecondary"
+        android:layout_gravity="center"
+        >
+    </ImageView>
+    
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/block_spacing">
+    </Space>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirm_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/confirm"
+        app:cornerRadius="18dp"
+        >
+    </com.google.android.material.button.MaterialButton>
+
+</LinearLayout>

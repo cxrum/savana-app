@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StepBarView">
+        <attr name="maxStep" format="integer"/>
+        <attr name="currentStep" format="integer"/>
+        <attr name="android:spacing" format="dimension"/>
+        <attr name="step_color" format="color"/>
+        <attr name="inactive_step_color" format="color"/>
+        <attr name="step_corner" format="dimension"/>
+        <attr name="step_height" format="dimension"/> </declare-styleable>
+</resources>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.main.search.recomedation.RecommendationsFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                app:cardCornerRadius="18dp"
+                >
+                <ImageView
+                    android:id="@+id/song_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorSecondary"
+                    >
+                </ImageView>
+            </androidx.cardview.widget.CardView>
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="0dp">
+            </Space>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                >
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/track_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Base.Theme.Savana.Text.Title"
+                    android:text="Example song title"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    >
+                </com.google.android.material.textview.MaterialTextView>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp">
+                </Space>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Base.Theme.Savana.Text.Subtitle"
+                    android:text="Example Author"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    >
+                </com.google.android.material.textview.MaterialTextView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_block_spacing">
+        </Space>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_block_spacing">
+        </Space>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:checkedButton="@id/buttonRecommendation"
+            >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonRecommendation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recommendation"
+                app:backgroundTint="@color/toggle_background_tint"
+                android:textColor="@color/toggle_text_color"
+            />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonAnalytics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Analytics"
+                app:backgroundTint="@color/toggle_background_tint"
+                android:textColor="@color/toggle_text_color"
+                />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_block_spacing">
+        </Space>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</ScrollView>
