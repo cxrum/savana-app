@@ -1,16 +1,18 @@
 package com.savana.domain.usecases.recommendation
 
 import com.savana.domain.models.RecommendationData
+import com.savana.domain.models.SelectedTrackGap
 import com.savana.domain.models.TrackInfo
 import com.savana.domain.models.UploadedTrackData
 import com.savana.domain.repository.recommendation.RecommendationRepository
 import com.savana.domain.repository.track.TrackRepository
+import com.savana.domain.repository.user.UserRepository
 
 class GetRecommendationsUseCase(
     private val trackRepository: TrackRepository,
-    private val recommendationRepository: RecommendationRepository
+    private val recommendationRepository: RecommendationRepository,
+    private val userRepository: UserRepository
 ) {
-
 
     suspend operator fun invoke(trackId: Int): Result<RecommendationData> {
         val uploadedTrackResult = trackRepository.trackInfo(trackId)
@@ -19,7 +21,7 @@ class GetRecommendationsUseCase(
         }
         val uploadedTrack = uploadedTrackResult.getOrThrow()
 
-        val recommendationsResult = recommendationRepository.recommendationTracks()
+        val recommendationsResult = recommendationRepository.recommendationTracks(trackId)
         if (recommendationsResult.isFailure) {
             return Result.failure(recommendationsResult.exceptionOrNull()!!)
         }
@@ -27,20 +29,15 @@ class GetRecommendationsUseCase(
 
         val recommendationsData = mutableListOf<TrackInfo>()
 
-        for (id in recommendations.tracks) {
-            val infoResult = trackRepository.trackInfo(id)
-            val fileResult = trackRepository.trackFile(id)
+        for (track in recommendations.tracks) {
+            val fileResult = trackRepository.trackFile(track.id)
 
-            if (infoResult.isFailure || fileResult.isFailure ) {
-                val info = infoResult.getOrThrow()
-                recommendationsData.add(info.copy(streamUrl = info.streamUrl))
+            if (fileResult.isFailure ) {
                 continue
             }
 
-            val info = infoResult.getOrThrow()
             val file = fileResult.getOrThrow()
-
-            recommendationsData.add(info.copy(bytesArray = file, streamUrl = info.streamUrl))
+            recommendationsData.add(track.copy(bytesArray = file))
         }
 
         val recommendationData = RecommendationData(
@@ -56,6 +53,19 @@ class GetRecommendationsUseCase(
         )
 
         return Result.success(recommendationData)
+    }
+
+    suspend operator fun invoke(
+        gap: SelectedTrackGap
+    ): Result<RecommendationData>{
+
+        val result = userRepository.sendTrackToAnalyze(gap)
+
+        if (result.isSuccess){
+            return this.invoke(result.getOrThrow())
+        }
+
+        return Result.failure(Exception())
     }
 
 }

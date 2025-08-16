@@ -22,9 +22,8 @@ interface TrackService {
     ): Response<ApiResponse<TrackInfo>>
 
 
-    @GET("{trackId}")
+    @GET("{trackId}/download")
     suspend fun downloadTrack(
-        @Header("content-type") contentType: String = "audio/mpeg",
         @Path("trackId") trackId: Int
     ):Response<ResponseBody>
 }

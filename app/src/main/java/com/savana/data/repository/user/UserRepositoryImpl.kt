@@ -11,8 +11,10 @@ import com.savana.domain.models.Status
 import com.savana.domain.models.user.UserData
 import com.savana.domain.models.user.toDomain
 import com.savana.domain.repository.user.UserRepository
+import kotlinx.coroutines.delay
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 class UserRepositoryImpl(
@@ -23,6 +25,7 @@ class UserRepositoryImpl(
 
     override suspend fun getInfo(): Result<UserData> {
         return try {
+            delay(500)
             val userId = userDao.getId()
                 ?: return Result.failure(NoTempedUserException())
 
@@ -46,6 +49,7 @@ class UserRepositoryImpl(
 
     override suspend fun sendTrackToAnalyze(track: SelectedTrackGap): Result<Int> {
         return try {
+            delay(500)
             val userId = userDao.getId()
                 ?: return Result.failure(NoTempedUserException())
 
@@ -53,10 +57,10 @@ class UserRepositoryImpl(
 
             val response = api.userService.uploadTrack(
                 contentType = "audio/mpeg",
-                contentDescription = "attachment; filename=\"${sanitizeFileName(track.trackTitle)}\"",
                 contentLength = track.trackData.size.toLong(),
                 userId = userId,
-                body = requestBody
+                body = requestBody,
+                trackName = sanitizeFileName(track.trackTitle)
             )
 
             if (response.isSuccessful) {
@@ -71,15 +75,18 @@ class UserRepositoryImpl(
                 Result.failure(Exception("Upload failed with code: ${response.code()}"))
             }
 
-        } catch (e: UnknownHostException){
-            Result.failure(AuthenticationException(null))
-        } finally {
-            Result.failure<Exception>(Exception())
+        } catch (e: UnknownHostException) {
+            Result.failure(AuthenticationException("No internet connection"))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(AuthenticationException("Request timed out"))
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 
     override suspend fun getHistory(): Result<List<HistoryEntry>> {
         return try {
+            delay(500)
             val userId = userDao.getId()
                 ?: return Result.failure(NoTempedUserException())
 
@@ -101,10 +108,12 @@ class UserRepositoryImpl(
             }else{
                 Result.failure(Exception())
             }
-        }catch (e: UnknownHostException){
-            Result.failure(AuthenticationException(null))
-        } finally {
-            Result.failure<Exception>(Exception())
+        } catch (e: UnknownHostException) {
+            Result.failure(AuthenticationException("No internet connection"))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(AuthenticationException("Request timed out"))
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 

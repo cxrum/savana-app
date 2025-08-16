@@ -14,6 +14,16 @@
         app:destination="@id/errorFragment">
     </action>
 
+    <action
+        android:id="@+id/action_global_to_Main"
+        app:destination="@id/searchMainFragment">
+    </action>
+
+    <action
+        android:id="@+id/action_global_to_GapSeelction"
+        app:destination="@id/gapSelectorFragment">
+    </action>
+
     <fragment
         android:id="@+id/searchMainFragment"
         android:name="com.savana.ui.fragments.main.search.main.SearchMainFragment"

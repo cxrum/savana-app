@@ -35,14 +35,34 @@
             android:layout_height="match_parent"
             >
         </Space>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/username_shimmer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:shimmer_auto_start="true"
+            app:shimmer_duration="1000">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unknown"
+                style="@style/Base.Theme.Savana.Text.Label1"
+                >
+            </com.google.android.material.textview.MaterialTextView>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="username"
+            android:text="@string/unknown"
             style="@style/Base.Theme.Savana.Text.Label1"
+            android:visibility="gone"
             >
         </com.google.android.material.textview.MaterialTextView>
+
 
         <Space
             android:layout_width="0dp"

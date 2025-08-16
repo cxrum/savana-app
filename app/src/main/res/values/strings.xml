@@ -54,4 +54,5 @@
     <string name="something_happened">Whoops! Something happened…</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="email_or_password_cannot_be_empty">Email or password cannot be empty</string>
+    <string name="unknown">Unknown</string>
 </resources>

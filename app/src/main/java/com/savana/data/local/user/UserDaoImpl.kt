@@ -11,6 +11,7 @@ class UserDaoImpl(
     companion object {
         private const val PREFS_NAME = "user_data_prefs"
         private const val KEY_USER_TOKEN = "user_token"
+        private const val KEY_USER_NAME = "user_name"
     }
 
     private val sharedPreferences: SharedPreferences =
@@ -23,6 +24,14 @@ class UserDaoImpl(
 
     override fun setId(id: Int) {
         sharedPreferences.edit{ putInt(KEY_USER_TOKEN, id) }
+    }
+
+    override fun getUsername(): String? {
+        return sharedPreferences.getString(KEY_USER_NAME, "Unknown")
+    }
+
+    override fun setUsername(name: String) {
+        sharedPreferences.edit{ putString(KEY_USER_NAME, name) }
     }
 
 }

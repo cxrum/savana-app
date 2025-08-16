@@ -34,7 +34,7 @@ class SelectAvatarFragment : Fragment() {
         setupDialogListener()
         setupListeners()
 
-        val avatarUrl = registrationViewModel.getRandomAvatar()
+        val avatarUrl = registrationViewModel.getRandomAvatar(requireContext())
 
         binding.avatarSelect.load(avatarUrl) {
             crossfade(true)

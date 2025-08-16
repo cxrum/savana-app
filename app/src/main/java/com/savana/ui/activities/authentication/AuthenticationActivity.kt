@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.input.key.Key.Companion.Window
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.savana.R
@@ -22,6 +23,8 @@ import com.savana.ui.activities.main.MainActivity
 import com.savana.ui.splash.NavigationTarget
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlin.system.measureTimeMillis
+import kotlin.time.measureTime
 
 class AuthenticationActivity : AppCompatActivity(){
 
@@ -94,6 +97,8 @@ class AuthenticationActivity : AppCompatActivity(){
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
+
+        measureTimeMillis()
     }
 
     private fun goToMain() {
@@ -102,4 +107,11 @@ class AuthenticationActivity : AppCompatActivity(){
         startActivity(intent)
         finish()
     }
+}
+
+open class aboba()
+
+class aboba2(): aboba(){
+    
+
 }

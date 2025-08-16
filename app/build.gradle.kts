@@ -109,6 +109,5 @@ dependencies {
     implementation(libs.androidx.viewpager2)
     implementation(libs.core.splashscreen)
 
-
-
+    implementation(libs.shimmer)
 }

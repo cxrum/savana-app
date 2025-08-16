@@ -18,7 +18,7 @@ fun provideRetrofit(baseUrl: String = "$API_URL/api/"): Retrofit {
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
     val client: OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(10, TimeUnit.SECONDS)
+        .connectTimeout(60, TimeUnit.SECONDS)
         .addInterceptor(interceptor)
         .build()
 

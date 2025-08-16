@@ -3,7 +3,6 @@ package com.savana.di
 import com.savana.core.newtwork.ConnectivityObserver
 import com.savana.core.newtwork.NetworkConnectivityObserver
 import com.savana.data.repository.authentication.AuthenticationRepositoryImpl
-import com.savana.data.repository.authentication.AuthenticationRepositoryMockup
 import com.savana.domain.repository.authentication.AuthenticationRepository
 import com.savana.domain.usecases.authentication.CheckAuthenticationUseCase
 import com.savana.domain.usecases.authentication.LoginUseCase
@@ -21,7 +20,7 @@ val authenticationModule = module {
     }
 
     single<AuthenticationRepository>{
-        AuthenticationRepositoryMockup(
+        AuthenticationRepositoryImpl(
             get()
         )
     }

@@ -3,6 +3,7 @@ package com.savana.ui.view.welcome_view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.withStyledAttributes
 import coil.load
@@ -43,9 +44,21 @@ class ProfileView @JvmOverloads constructor(
         binding.username.text = userData.nickname
         binding.userPfp.load(userData.avatar) {
             crossfade(true)
-            placeholder(R.drawable.ic_image_placeholder)
-            error(R.drawable.ic_image_placeholder)
+            placeholder(R.drawable.ic_user_placeholder)
+            error(R.drawable.ic_user_placeholder)
             transformations(CircleCropTransformation())
         }
+    }
+
+    fun showUsernameShimmer() {
+        binding.usernameShimmer.startShimmer()
+        binding.usernameShimmer.visibility = VISIBLE
+        binding.username.visibility = GONE
+    }
+
+    fun hideUsernameShimmer() {
+        binding.usernameShimmer.stopShimmer()
+        binding.usernameShimmer.visibility = GONE
+        binding.username.visibility = VISIBLE
     }
 }

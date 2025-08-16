@@ -12,6 +12,8 @@ import com.savana.domain.models.user.RegistrationData
 import com.savana.domain.models.user.UserData
 import com.savana.domain.models.user.toDomain
 import com.savana.domain.repository.authentication.AuthenticationRepository
+import kotlinx.coroutines.delay
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 class AuthenticationRepositoryImpl(
@@ -22,6 +24,7 @@ class AuthenticationRepositoryImpl(
 
     override suspend fun login(data: LoginData): Result<UserData> {
         return try {
+            delay(500)
             val response = api.userService.login(
                 LoginRequest(
                     email = data.email,
@@ -41,22 +44,25 @@ class AuthenticationRepositoryImpl(
                     Result.failure(LoginFailedException(msg))
                 }
             } else {
-                val msg = when(response.code()){
-                    401 -> "Invalid email or password"
-                    else -> "Login failed with code: ${response.code()}"
+                val msg = when (response.code()) {
+                    in 400 until 500 -> "Invalid email or password"
+                    else -> "Unknown error"
                 }
                 Result.failure(LoginFailedException(msg))
             }
 
-        }catch (e: UnknownHostException){
-            Result.failure(AuthenticationException(null))
-        } finally {
-            Result.failure<Exception>(Exception())
+        } catch (e: UnknownHostException) {
+            Result.failure(AuthenticationException("No internet connection"))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(AuthenticationException("Request timed out"))
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 
     override suspend fun register(data: RegistrationData): Result<UserData> {
         return try {
+            delay(500)
             val response = api.userService.register(
                 RegisterRequest(
                     email = data.email,
@@ -78,12 +84,14 @@ class AuthenticationRepositoryImpl(
                 )
                 Result.success(userData)
             } else {
-                Result.failure(RegistrationFailedException("Registration failed with code: ${response.code()}"))
+                Result.failure(RegistrationFailedException("Registration failed"))
             }
-        }catch (e: UnknownHostException){
-            Result.failure(AuthenticationException(null))
-        } finally {
-            Result.failure<Exception>(Exception())
+        } catch (e: UnknownHostException) {
+            Result.failure(AuthenticationException("No internet connection"))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(AuthenticationException("Request timed out"))
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 

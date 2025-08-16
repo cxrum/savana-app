@@ -22,5 +22,5 @@ data class Track(
 data class Criterion(
     val id: Int,
     val name: String,
-    val value: Double
+    val value: Float
 )

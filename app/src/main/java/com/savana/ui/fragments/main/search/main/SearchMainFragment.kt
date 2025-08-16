@@ -13,7 +13,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
+import com.savana.R
 import com.savana.databinding.FragmentSearchMainBinding
 import com.savana.ui.activities.main.MainViewModel
 import kotlinx.coroutines.launch
@@ -71,11 +74,17 @@ class SearchMainFragment : Fragment() {
         }
     }
 
-    private fun gapSelectorScreen(uri:Uri, fileName: String){
+    private fun gapSelectorScreen(uri: Uri, fileName: String) {
+        val navController = findNavController()
+
         val action = SearchMainFragmentDirections
-            .actionSearchMainFragmentToGapSelectorFragment(fileName, uri)
-        findNavController().navigate(action)
+            .actionGlobalToGapSeelction(fileName, uri)
+
+        navController.navigate(action)
+
         searchMainViewModel.onNavigationToGapSelectorDone()
+        mainViewModel.clearError()
+        mainViewModel.operationHandled()
     }
 
     private fun setupUiListeners(){

@@ -11,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.media3.common.util.UnstableApi
 import androidx.viewpager2.widget.ViewPager2
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.savana.R
 import com.savana.databinding.FragmentRecomedationsBinding
 import com.savana.domain.models.RecommendationData
@@ -49,7 +51,7 @@ class RecommendationsFragment : Fragment() {
                 launch {
                     mainViewModel.recommendationResult.collect { state ->
                         if (state is OperationState.Success<RecommendationData>) {
-                            mainViewModel.operationLoading()
+                            mainViewModel.operationLoading(msg = getString(R.string.the_track_is_being_analyzed))
                             val recommendationData = state.data
                             recommendationViewModel.processRecommendationData(recommendationData)
                             mainViewModel.operationHandled()
@@ -63,7 +65,8 @@ class RecommendationsFragment : Fragment() {
                         if (state.trackTitle != null && state.trackAuthor != null){
                             setUpTrackData(
                                 state.trackTitle,
-                                state.trackAuthor
+                                state.trackAuthor,
+                                state.songImage
                             )
                         }
                     }
@@ -72,9 +75,15 @@ class RecommendationsFragment : Fragment() {
         }
     }
 
-    private fun setUpTrackData(title: String, author: String){
+    private fun setUpTrackData(title: String, author: String, coverUrl: String?){
         binding.trackTitle.text = title
         binding.author.text = author
+        binding.songCover.load(coverUrl) {
+            crossfade(true)
+            placeholder(R.drawable.ic_image_placeholder)
+            error(R.drawable.ic_image_placeholder)
+            transformations(CircleCropTransformation())
+        }
     }
 
     private fun setListeners(){

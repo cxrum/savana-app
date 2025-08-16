@@ -21,7 +21,9 @@ import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
 @UnstableApi
-class AudioPlayerViewModel(application: Application) : ViewModel() {
+class AudioPlayerViewModel(
+    application: Application
+) : ViewModel() {
 
     private val musicPlayerManager = MusicPlayerManager(application.applicationContext)
 

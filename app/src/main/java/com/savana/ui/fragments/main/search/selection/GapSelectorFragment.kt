@@ -1,8 +1,10 @@
 package com.savana.ui.fragments.main.search.selection
 
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +48,7 @@ class GapSelectorFragment : Fragment() {
     private val filePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
             gapSelectionViewModel.loadAudioFile(it, requireActivity().contentResolver, requireContext())
+            gapSelectionViewModel.setFilename(getFileName(uri))
         }
     }
 
@@ -235,7 +238,7 @@ class GapSelectorFragment : Fragment() {
     }
 
     private fun setGapDuration(trackDurationSec: Int){
-        if (trackDurationSec > MIN_DURATION_SECONDS){
+        if (trackDurationSec >= MIN_DURATION_SECONDS){
             binding.songGapSelector.setGapDuration(MIN_DURATION_SECONDS)
         }
 
@@ -286,4 +289,26 @@ class GapSelectorFragment : Fragment() {
         gapSelectionViewModel.clearError()
     }
 
+    private fun getFileName(uri: Uri): String? {
+        var fileName: String? = null
+        if (uri.scheme == "content") {
+            val cursor: Cursor? = requireActivity().contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    val displayNameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    if (displayNameIndex != -1) {
+                        fileName = it.getString(displayNameIndex)
+                    }
+                }
+            }
+        }
+        if (fileName == null) {
+            fileName = uri.path
+            val cut = fileName?.lastIndexOf('/')
+            if (cut != -1 && cut != null) {
+                fileName = fileName?.substring(cut + 1)
+            }
+        }
+        return fileName
+    }
 }

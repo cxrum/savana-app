@@ -25,9 +25,9 @@ class SongGapSelectorView @JvmOverloads constructor(
 
     private var totalDurationSec: Int = 100
     private var currentSec: Int = 0
-    private var gapDurationSec: Int = 30
+    private var gapDurationSec: Int = 29
 
-    var gapDurationSecDefault: Int = 30
+    var gapDurationSecDefault: Int = 29
         private set
 
     var currentStartSec: Int = 0

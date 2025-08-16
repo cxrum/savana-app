@@ -6,6 +6,8 @@ import com.savana.domain.models.Status
 import com.savana.domain.models.TrackInfo
 import com.savana.domain.models.toDomainModel
 import com.savana.domain.repository.track.TrackRepository
+import kotlinx.coroutines.delay
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 class TracksRepositoryImpl: TrackRepository {
@@ -30,6 +32,7 @@ class TracksRepositoryImpl: TrackRepository {
 
     override suspend fun trackInfo(trackId: Int): Result<TrackInfo> {
         return try {
+            delay(500)
             val response = api.trackService.trackInfo(trackId)
 
             if (response.isSuccessful) {
@@ -44,15 +47,18 @@ class TracksRepositoryImpl: TrackRepository {
             } else {
                 Result.failure(Exception("Failed to load track info: ${response.code()}"))
             }
-        }catch (e: UnknownHostException){
-            Result.failure(AuthenticationException(null))
-        } finally {
-            Result.failure<Exception>(Exception())
+        } catch (e: UnknownHostException) {
+            Result.failure(AuthenticationException("No internet connection"))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(AuthenticationException("Request timed out"))
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 
     override suspend fun trackStatus(trackId: Int): Result<Status> {
         return try {
+            delay(500)
             val response = api.trackService.trackStatus(trackId)
 
             if (response.isSuccessful) {
@@ -67,10 +73,12 @@ class TracksRepositoryImpl: TrackRepository {
             } else {
                 Result.failure(Exception("Failed to load track info: ${response.code()}"))
             }
-        }catch (e: UnknownHostException){
-            Result.failure(AuthenticationException(null))
-        } finally {
-            Result.failure<Exception>(Exception())
+        } catch (e: UnknownHostException) {
+            Result.failure(AuthenticationException("No internet connection"))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(AuthenticationException("Request timed out"))
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 }

@@ -45,11 +45,6 @@ class MainViewModel(
 
     fun userDataUpdate(context: Context){
         viewModelScope.launch {
-            if (!isEthernetConnected(connectivityObserver)){
-                operationError(context.getString(R.string.no_internet_connection))
-                return@launch
-            }
-
             val userData = getUserInfoUseCase()
 
             if (userData.isSuccess){
@@ -112,7 +107,7 @@ class MainViewModel(
         }
     }
 
-    fun loadRecommendationFromHistory(context: Context, historyId: Int) {
+    fun loadRecommendation(context: Context, historyId: Int) {
         viewModelScope.launch {
             if (!isEthernetConnected(connectivityObserver)){
                 operationError(context.getString(R.string.no_internet_connection))
@@ -134,14 +129,12 @@ class MainViewModel(
 
 
     fun startMusicAnalyzingProcess(context: Context, gap: SelectedTrackGap) {
-
-        operationLoading(canLeaveScreen = false)
-
         viewModelScope.launch {
             if (!isEthernetConnected(connectivityObserver)){
                 operationError(context.getString(R.string.no_internet_connection))
                 return@launch
             }
+            operationLoading(canLeaveScreen = false)
 
             val res = sendTrackToAnalysisUseCase.invoke(gap)
 
@@ -150,22 +143,21 @@ class MainViewModel(
                     canLeaveLoadingScreen = true
                 )
                 val history_id = res.getOrNull()
-                if (history_id != null){
-                    val recommendationData = historyUseCase(history_id)
-                    if (recommendationData.isSuccess){
-                        val historyEntry = recommendationData.getOrNull()
 
-                        if (historyEntry?.status == Status.Success){
-                            loadRecommendationFromHistory(context, history_id)
-                        }
-
-                    }
-                }
+//                if (history_id != null){
+//                    val recommendationData = historyUseCase(history_id)
+//                    if (recommendationData.isSuccess){
+//                        val historyEntry = recommendationData.getOrNull()
+//
+//                        if (historyEntry?.status == Status.Success){
+//                            loadRecommendation(context, history_id)
+//                        }
+//                    }
+//                }
             }else{
                 val exception = res.exceptionOrNull()?.message ?: "Unknown error during analysis"
                 _recommendationResult.value = OperationState.Error(exception)
             }
-
         }
     }
 

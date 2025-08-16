@@ -6,6 +6,7 @@ import androidx.annotation.OptIn
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MimeTypes
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.File
 
 class MusicPlayerViewModel(
     private val applicationContext: Context
@@ -106,17 +108,25 @@ class MusicPlayerViewModel(
         val currentPlayer = exoPlayer ?: return
 
         if (trackInfo.bytesArray != null) {
-            val dataSourceFactory = ByteArrayDataSource.Factory(trackInfo.bytesArray)
 
-            val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(MediaItem.fromUri(Uri.EMPTY))
+            val file = File(applicationContext.cacheDir, "temp_${trackInfo.id}.mp3")
+            file.writeBytes(trackInfo.bytesArray)
 
-            currentPlayer.setMediaSource(mediaSource)
+            val mediaItem = MediaItem.Builder()
+                .setUri(Uri.fromFile(file))
+                .setMediaId(trackInfo.id.toString())
+                .setMimeType(MimeTypes.AUDIO_MPEG)
+                .build()
+
+            currentPlayer.setMediaItem(mediaItem)
+
         } else if (trackInfo.streamUrl != null) {
+
             val mediaItem = MediaItem.Builder()
                 .setUri(trackInfo.streamUrl)
                 .setMediaId(trackInfo.id.toString())
                 .build()
+
             currentPlayer.setMediaItem(mediaItem)
         } else {
             return

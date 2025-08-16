@@ -2,7 +2,6 @@ package com.savana.ui.activities.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
@@ -119,7 +118,12 @@ class MainActivity : AppCompatActivity() {
 
         }
         mainViewModel.userData.observe(this){ data ->
-            setupUserInfo(data)
+            if (data!=null){
+                setupUserInfo(data)
+                binding.layerHistory.user.hideUsernameShimmer()
+            }else{
+                binding.layerHistory.user.showUsernameShimmer()
+            }
         }
     }
 
@@ -197,7 +201,7 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.operationError(getString(R.string.the_track_isn_t_analyzing_for_some_reason))
             }
             Status.Success -> {
-                mainViewModel.loadRecommendationFromHistory(this@MainActivity, historyEntry.id)
+                mainViewModel.loadRecommendation(this@MainActivity, historyEntry.id)
             }
         }
     }
@@ -230,11 +234,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleMusicAnalyzeError(msg: String? = null) {
+        mainViewModel.operationHandled()
         val action = ErrorFragmentDirections
             .actionGlobalToErrorFragment(msg)
 
         val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.loadingFragment, true)
+            .setPopUpTo(R.id.searchMainFragment, false)
             .build()
 
         navController.navigate(action, navOptions)

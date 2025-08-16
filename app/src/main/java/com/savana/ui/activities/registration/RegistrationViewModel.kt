@@ -110,8 +110,10 @@ class RegistrationViewModel(
         }
     }
 
-    fun getRandomAvatar(): AvatarData?{
-        return avatars.value?.get(1)
+    fun getRandomAvatar(context: Context): AvatarData?{
+        val avatarId = 1
+        onAvatarIdChanged(avatarId,context)
+        return avatars.value?.get(avatarId)
     }
 
     fun onEmailChanged(email: String, context: Context){
